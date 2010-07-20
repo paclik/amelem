@@ -2,24 +2,14 @@
 
 one:
   id: 1
-  first_name: MyString
-  last_name: MyString
-  mob_phone: MyString
-  land_line: MyString
-  email: MyString
+  first_name: Adam
+  last_name: Bernau
+  mob_phone: +420800123456
+  land_line: +420800123456
+  email: mail@mail.cz
   height: 180
   weight: 70
   age: 56
   body_type_id: 1
 
-two:
-  id: 2
-  first_name: MyString
-  last_name: MyString
-  mob_phone: MyString
-  land_line: MyString
-  email: MyString
-  height: 160
-  weight: 65
-  age: 20
-  body_type_id: 3
+
