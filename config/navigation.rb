@@ -32,7 +32,7 @@ SimpleNavigation::Configuration.run do |navigation|
     
     primary.item :talks, 'Hovory',talks_path  do |sub_nav|
  	 	 sub_nav.item :list, 'Přehled', :controller => 'talks', :action => 'index', :call_when_time1_d => "", :call_when_time2_d => ""
- 	 	 sub_nav.item :datsearch, 'Dnes', :controller => 'talks', :action => 'index', :call_when_time1_d => Date.today.strftime("%d.%m.%Y"), :call_when_time2_d => ""
+ 	 	 sub_nav.item :datsearch, 'Dnes', :controller => 'talks', :action => 'index', :call_when_time1_d => Date.today.strftime("%d.%m.%Y"), :call_when_time2_d => Date.today.strftime("%d.%m.%Y")
  	 	 sub_nav.item :new, 'Nový', new_talk_path
     	
     	                                                          
