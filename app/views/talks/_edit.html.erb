@@ -26,7 +26,7 @@
   			<%= f.radio_button :result, 'Omyl'%>Omyl
   			<%= f.radio_button :result, 'Nemá zájem'%>Nemá zájem
 			</td>	
-			
+		
 		</tr>	
 		<tr>  
 			<td colspan="3" >
@@ -36,7 +36,7 @@
 		<tr>  
 			<td>
 				<%= f.label :Skript %><BR/>
-				<%= f.collection_select :script_id, Script.all, :id, :name, {:include_blank => true}  %>
+				<%= f.collection_select :script_id, Script.all(:order => :name), :id, :name, {:include_blank => true}  %>
 				
 			</td>
 			<td>
@@ -68,7 +68,7 @@
 			
 		</tr>
 		<tr> 
-			<td colspan="3" >
+			<td colspan="2" >
 				<%= submit_to_remote 'button', 'Start hov.',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, :update => "start_hovoru" %>  
 				<span id="start_hovoru">
          	<%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.start_time
@@ -80,6 +80,9 @@
           %> 
 				</span>
 			</td>	
+			<td  > 
+			<%= f.submit 'Ulož' %>	
+			</td>
 		</tr>
 		
 		
