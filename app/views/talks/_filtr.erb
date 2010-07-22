@@ -20,9 +20,8 @@
 		<% if params["finished"] == "0" then  
 			@check = "checked" 
 			@check1 = "" 
-		end %>
-		<% if params["finished"].empty? or params["finished"] == nil then  
-			@check1 = "checked"
+		else 
+		  @check1 = "checked"
 			@check = "" 
 		end %>
 		</th>
