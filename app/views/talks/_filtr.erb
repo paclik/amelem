@@ -21,7 +21,7 @@
 			@check = "checked" 
 			@check1 = "" 
 		end %>
-		<% if params["finished"].empty? then  
+		<% if params["finished"].empty? or params["finished"] == nil then  
 			@check1 = "checked"
 			@check = "" 
 		end %>
