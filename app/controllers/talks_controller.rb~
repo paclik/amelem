@@ -5,7 +5,7 @@ class TalksController < ApplicationController
   
   
   $cookieHash = {"contacts.last_name"=>nil,"call_when_time1_d"=>nil,"call_when_time2_d"=>nil,
-"productid"=>nil,"width"=>nil,"outtransport_id_n"=>nil}
+  "finished"=>nil,"width"=>nil,"outtransport_id_n"=>nil}
   
  ########  private section   ######################### 
 private
@@ -106,7 +106,9 @@ def delsearch()
         cookies[key] = nil
           params[key] = nil
   }  
-  
+  ##aby se po zresetování nastavila výchozí hodnota na zobrazování jen neukončených hovorů
+  cookies["finished"] = 0 
+  params["finished"] = 0
   redirect_to :action => 'index'
 
 end

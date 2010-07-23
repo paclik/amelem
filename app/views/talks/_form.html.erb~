@@ -22,7 +22,7 @@
   	<tr>  
 			<td>
 				<%= f.label :Skript %><BR/>
-				<%= f.collection_select :script_id, Script.all, :id, :name, {:include_blank => true}  %>
+				<%= f.collection_select :script_id, Script.all(:order => :name),  :id, :name,  {:include_blank => true} %>
 				
 			</td>
 			<td>

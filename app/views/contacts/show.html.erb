@@ -54,3 +54,8 @@
 <%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @contact} %> |
 <%= link_to 'Přehled', contacts_path %>
 </div>
+
+<p>
+Výpis všech hovorů s <%=h  @contact.last_name if @contact   %>
+	<%= render :partial => '/talks/list' %> 
+</ p>

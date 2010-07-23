@@ -29,43 +29,13 @@
 				<%= f.label :Zavolat_kdy %><BR/>
 				<%= f.datetime_select :call_when_time, :order => [:day, :month, :year], :use_month_numbers => true %>
 			</td>
-			<td>
-				<%= f.label :hovor_ukončen %><BR/>
-				<%= f.check_box :finished %>
-		 </td>
-		 
+				 
 		</tr>
-		<tr>  
-			<td>
-				<%= f.label :poradna %><BR/>
-				<%= f.check_box :poradna %>
-			</td>
-			<td>
-				<%= f.label :poradna_kdy %><BR/>
-				<%= f.date_select :poradna_when, :order => [:day, :month, :year], :start_year => Time.now.year, :use_month_numbers => true,
-																				:include_blank => true %>
-			</td> 
-			<td>
-				<%= f.label :Zájem_o_informace  %><BR/>
-				<%= f.check_box :informace_zajem %>
-			</td>
-			
-		</tr>
-		<tr > 
-			<td  colspan="3"  >
-				<%= f.label :Skript %> <BR/>
-				<%=h  sanitize(@talk.script.message) if  @talk.script %>
-			</td>	
-		</tr>
-		<tr> 
-			<td colspan="3">
-				<%= f.label :Obsah_hovoru %><br />
-				<%= f.text_area :poznamka,"cols" =>90, "rows" => 10 %>
-			</td>	
-		</tr>
+		
 		<tr> 
 			<td colspan="3" >
-			 <%= f.submit 'Ulož' %>
+	   	  <%=  f.hidden_field :finished, {:value => "0"} %>
+  			 <%= f.submit 'Ulož' %>
 			</td>	
 		</tr>
 		<tr> 

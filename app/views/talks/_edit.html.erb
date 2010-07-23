@@ -2,11 +2,13 @@
 <% form_for(@talk) do |f| %>
   <%= f.error_messages %>
   <%=  f.hidden_field :contact_id %>
-
+  
 	<p>
 		jméno: <b><%=h @talk.contact.first_name if @talk.contact %> </b>  
 		příjmení: <b><%=h @talk.contact.last_name if @talk.contact  %> </b>
 		stav: <b><%=h @talk.contact.state if @talk.contact  %> </b>
+		..........<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
+		
 	</p>	
 	
 	
@@ -14,9 +16,9 @@
 		telefon: <%=h @talk.contact.mob_phone if @talk.contact %>  email: 
 			<%= text_field_tag "email",value=@talk.contact.email,{:size => 30} %> 
 	</p>
-
+	
   <table>    
-	<tr> 
+	<tr align="LEFT"> 
 			<td colspan="3" >
 			  <%= f.label :Výsledek_hovoru %><br />
 				<%= f.radio_button :result, 'Nebere'%> Nebere
@@ -41,50 +43,44 @@
 			</td>
 			<td>
 				<%= f.label :Zavolat_kdy %><BR/>
-				<%= f.datetime_select :call_when_time, :order => [:day, :month, :year], :use_month_numbers => true %>
-			</td>
-			<td>
-				<%= f.label :hovor_ukončen %><BR/>
-				<%= f.check_box :finished %>
-		 </td>
-		 
-		</tr>
-		<tr>  
-			<td>
-				<%= f.label :poradna %><BR/>
-				<%= f.check_box :poradna %>
-			</td>
-			<td>
-				
-			
-			<BR/>
-				<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %>
-			  </b>
-			</td> 
-			<td>
-				<%= f.label :Zájem_o_informace  %><BR/>
-				<%= f.check_box :informace_zajem %>
+				<%= f.datetime_select :call_when_time, :order => [:day, :month, :year],:minute_step => 5, :use_month_numbers => true %>
 			</td>
 			
 		</tr>
 		<tr> 
-			<td colspan="2" >
+			<td >
 				<%= submit_to_remote 'button', 'Start hov.',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, :update => "start_hovoru" %>  
 				<span id="start_hovoru">
          	<%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.start_time
           %> 
 				</span>
+			</td >
+			<td colspan =2 >
 				<%= submit_to_remote 'button', 'Stop hov.',  :url => {:action => :ajax_respond_stop_talk ,:id => @talk}, :update => "stop_hovoru" %>  
 				<span id="stop_hovoru">
          	<%= @talk.end_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.end_time
           %> 
+          <%= f.label :hovor_ukončen %>
+          <%= f.check_box :finished , :disabled=> true  %>
+		     
 				</span>
+			  </td>	
+		</tr>
+		<tr>  
+			<td colspan="3" >
+				<HR/>
 			</td>	
-			<td  > 
-			<%= f.submit 'Ulož' %>	
+		</tr>  
+		<tr>
+			<td colspan = 3 > 
+				<%= f.submit 'Ulož' %>	
 			</td>
 		</tr>
-		
+		<tr>  
+			<td colspan="3" >
+				<HR/>
+			</td>	
+		</tr>  
 		
 		<tr> 
 		
@@ -116,6 +112,10 @@
 				<div id="my_list">
           
 </div>
+<p>
+Výpis všech hovorů s <%=h  @talk.contact.last_name if @talk.contact   %>
+<%= render :partial => 'list' %> 
+</ p>
 			</td>	
 		</tr>
 		

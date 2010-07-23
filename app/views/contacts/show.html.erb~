@@ -50,6 +50,7 @@
 </div>
 </div>
 <div class="listtable">
-<%= link_to 'Edit', edit_contact_path(@contact) %> |
-<%= link_to 'Back', contacts_path %>
+<%= link_to 'Editovat', edit_contact_path(@contact) %> |
+<%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @contact} %> |
+<%= link_to 'Přehled', contacts_path %>
 </div>
