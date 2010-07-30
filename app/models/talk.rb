@@ -8,7 +8,7 @@ class Talk < ActiveRecord::Base
 
 	
 	def contact_name
-			contact.last_name if contact
+		contact.last_name + contact.first_name if contact
 	end
 	
 		

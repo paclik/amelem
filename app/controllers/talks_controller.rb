@@ -40,7 +40,7 @@ def processParams()
 						when "1"
 							@condition =  key.slice(0..-4) + " >= '#{DateTime.strptime(params[key],'%d.%m.%Y')}' "
 						else
-							@condition =  key.slice(0..-4) + " <= '#{DateTime.strptime(params[key],'%d.%m.%Y')+1}' "
+							@condition =  key.slice(0..-4) + " <= '#{DateTime.strptime(params[key] + 'T23:59:59','%d.%m.%YT%H:%M:%S')}' "
 					end	
         else
           @condition =  "(LOWER("+key+") LIKE " + "'%" + params[key].downcase.strip  + "%')" 
@@ -52,7 +52,7 @@ def processParams()
           when "1"
       			@condition =  @condition + " and " + key.slice(0..-4) + " >= '#{DateTime.strptime(params[key],'%d.%m.%Y')}' "
           else
-          	@condition =  @condition + " and " + key.slice(0..-4) + " <= '#{DateTime.strptime(params[key],'%d.%m.%Y')+1}' "
+          	@condition =  @condition + " and " + key.slice(0..-4) + " <= '#{DateTime.strptime(params[key] + 'T23:59:59','%d.%m.%YT%H:%M:%S')}' "
           end	
         else
            	@condition =  @condition + " and " + "(LOWER("+key+") LIKE " + "'%" + params[key].downcase.strip  + "%')" 

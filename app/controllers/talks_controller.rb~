@@ -122,7 +122,7 @@ end
   		@timemin = @timeref
   		@timemax = @timeref + 1
   
-  		@conditions = "call_when_time >= '#{@timemin}' and call_when_time < '#{@timemax}'"
+  		@conditions = "call_when_time >= '#{@timemin}' and call_when_time < '#{@timemax}' and finished <> 1"
   	else  
   		@timeref = ""
   		@timemin = ""
@@ -132,7 +132,12 @@ end
   	
     @talks = Talk.find(:all, :conditions => @conditions, :order => "call_when_time DESC")
     #render :text => @conditions
-    render :partial => "index"
+    if @talks.count > 0
+    then 
+    	render :partial => "list"  
+    else
+    	render :text => "Žádné naplánované hovory"
+    end	
 
   end
   
@@ -146,9 +151,10 @@ end
   
   def ajax_respond_stop_talk 
   	@talk = Talk.find(params[:id])
+  	Talk.update (@talk,{ :finished => true })
   	Talk.update (@talk,{ :end_time => Time.now })
   	@talk = Talk.find(params[:id])
-   	render  :text => @talk.end_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") ,  :layout => false
+  	render  :text => @talk.end_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") +"  "+" <b>Hovor ukončen:</b><input checked='checked' id='talk_finished' name='talk[finished]' type='checkbox' value='1' 'disabled'/>",  :layout => false
    	 
   end	
   
@@ -165,23 +171,14 @@ end
   	processParams()
   	page = params[:page] || 1
   	#DateTime.strptime(params[:call_when_time1_d],'%d.%m.%Y') if params[:call_when_time1_d]
-  	
-  	@timeref = DateTime.new
-  	if params[:datsearch] then
-  		@timeref = DateTime.strptime(params[:datsearch],'%Y-%m-%d') 
-  		@timemin = @timeref
-  		@timemax = @timeref + 1
-  		@conditions = @condition + " and call_when_time >= '#{@timemin}' and call_when_time < '#{@timemax}'"
-  		@title = "Výpis hovorů dne: " +   @timeref.strftime("%d.%m.%Y")
-  	else  
-  		@timeref = ""
-  		@timemin = ""
-  		@timemax = ""
-  		if @condition != nil then @conditions = @condition + " "  else @conditions = " " end
-  		@title = "Výpis všech hovorů"
+  	if @condition 
+  	then
+  		@condition =  @condition + " and contact_id LIKE #{params[:contact_id]}"  if params[:contact_id] 
+  	else
+  		@condition = "contact_id LIKE #{params[:contact_id]}"  if params[:contact_id]
   	end	
   	#@items = Item.paginate :page => page, :order => "id desc", :conditions => @condition
-    @talks = Talk.paginate :page => params[:page], :conditions => @conditions, :joins => [:contact], :order => "call_when_time DESC"
+    @talks = Talk.paginate :page => params[:page], :conditions => @condition, :joins => [:contact], :order => "call_when_time DESC"
     	#render :text => @conditions
       respond_to do |format|
       format.html # index.html.erb
@@ -194,6 +191,8 @@ end
   # GET /talks/1.xml
   def show
     @talk = Talk.find(params[:id])
+     @condition =  "contact_id LIKE #{@talk.contact_id}"  
+     @talks = Talk.find(:all, :conditions => @condition, :order => "call_when_time DESC")
      @title="Hovor"
     respond_to do |format|
       format.html # show.html.erb
@@ -243,7 +242,7 @@ end
     @talk = Talk.new
     @talk.contact_id = params[:contact_id]
     @title="Nový hovor"
-    #@talk.call_when_time = Time.now
+    @talk.call_when_time = Time.zone.now + 600
    
     #@contact = Contact.find(params[:contact_id])
     #render  :text => "Nový hovor s kontaktem #{ @talk.contact.last_name }" , :layout => true 
@@ -254,6 +253,8 @@ end
   def edit
     @talk = Talk.find(params[:id])
     @title="Edituju hovor"
+    @condition =  "contact_id LIKE #{@talk.contact_id}"  
+    @talks = Talk.find(:all, :conditions => @condition, :order => "call_when_time DESC")
     #render  :text => "format datumu  #{@formatter()}" , :layout => true 
     #render  :text => "editace hovoru s kontaktem #{@talk.contact.last_name}" , :layout => true 
    
