@@ -1,17 +1,18 @@
 <p>
   <b>Kontakt:</b>
    <%=h  @talk.contact.first_name if @talk.contact   %> <%=h @talk.contact.last_name if @talk.contact  %> 
+   
 </p>
-
+<p>
+	<b>stav: </b><%=h @talk.contact.state if @talk.contact  %> 
+</p>
 <p>
   <b>Kdy zavolat:</b>
   <%=h   @talk.call_when_time.strftime("%d-%m-%Y %H.%M| Den: %a | Týden:%W") if @talk.call_when_time %>
 </p>
+
 <p>
-	<b>Stav:</b> <%=h @talk.contact.state if @talk.contact  %> 
-</p>
-<p>
-  <b>Hotovo:</b>
+  <b>Hovor skončil:</b>
   <%=h "Ano" if @talk.finished %>
 </p>
 
@@ -21,20 +22,15 @@
 </p>
 
 <p>
-  <b>Poradna kdy:</b>
-  <%=h @talk.poradna_when.strftime("%d-%m-%Y | Den: %a | Týden:%W") if @talk.poradna_when %>
-</p>
-
-<p>
-  <b>Informace zajem:</b>
-  <%=h "Ano" if @talk.informace_zajem %>
-</p>
-
-<p>
   <b>Poznamka:</b>
   <%=h @talk.poznamka %>
 </p>
 
-
 <%= link_to 'Editovat', edit_talk_path(@talk) %> |
+<%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact} %> |
 <%= link_to 'Přehled hovorů', talks_path %>
+
+<p>
+Výpis všech hovorů s <%=h  @talk.contact.last_name if @talk.contact   %>
+<%= render :partial => 'list' %> 
+</ p>

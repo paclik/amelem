@@ -24,6 +24,8 @@
   <p>
   	<%= f.label :Stav_kontaktu %><br />
 		<%= f.radio_button :state, 'Zájemce'%> Zájemce
+		<%= f.radio_button :state, 'Zájemce'%> Zájemce o práci
+		<%= f.radio_button :state, 'Zájemce'%> Zájemce o hubnutí
 		<%= f.radio_button :state, 'Zájemce po poradně'%>Zájemce po poradně
 		<%= f.radio_button :state, 'Zájemce s analýzou'%>Zájemce s analýzou
 		<%= f.radio_button :state, 'Opakovaný účastník poradny'%>Opakovaný účastník poradny
