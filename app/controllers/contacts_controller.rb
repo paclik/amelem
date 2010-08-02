@@ -23,7 +23,8 @@ class ContactsController < ApplicationController
     #params[:first_name]
     #params[:first_name]
     
-    @conditions =  ['first_name LIKE ? AND last_name LIKE ? AND ( mob_phone LIKE ? OR land_line LIKE ?)', "%#{params[:first_name]}%",  "%#{params[:last_name]}%", "%#{params[:mob_phone]}%" , "%#{params[:mob_phone]}%"] 
+    @conditions =  ['first_name LIKE ? AND last_name LIKE ? AND ( mob_phone LIKE ? OR land_line LIKE ? ) AND email LIKE ? AND state LIKE ?',
+    "%#{params[:first_name]}%",  "%#{params[:last_name]}%", "%#{params[:mob_phone]}%" , "%#{params[:mob_phone]}%", "%#{params[:email]}%" , "%#{params[:state]}%"] 
     
     @contacts = Contact.paginate :page => params[:page],:conditions =>  @conditions, :order => "last_name asc"
     @title="Přehled kontaktů"
