@@ -1,6 +1,6 @@
 
 <tr>
- 		<th nowrap>Nr. </th>     
+ 		<th nowrap>N. </th>     
  		<th>Kontakt</th>
     <th>Volat kdy </th>
     <th>Konec</th>
@@ -25,12 +25,12 @@
   						else
   							(i+1).to_i
   						end	
-  						%>
-   	<%=if defined?(@talks.current_page) then check_box_tag 'talk['+i.to_s+']',talk.contact_id end %>						 
+  						%>		 
   </td> 
   <%i=i+1%>
-  <td >
-     	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
+  <td nowrap>
+    <%=if defined?(@talks.current_page) then check_box_tag 'talk['+i.to_s+']',talk.contact_id end %>		 	
+  	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
     </td>
    	<td>
    		<%=h talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M")%>
