@@ -1,0 +1,85 @@
+<% form_for(@contact) do |f| %>
+  <%= f.error_messages %>
+<div style="float: left" >
+	<%= f.label :first_name %><br />
+	<%= f.text_field :first_name %><br />
+	<%= f.label :last_name %><br />
+	<%= f.text_field :last_name %>
+	<br /> 
+	<%= f.label :mobil_telefon %><br />
+	<%= f.text_field :mob_phone %>
+	<br /> 
+	<%= f.label :pevná_linka  %><br />
+	<%= f.text_field :land_line %>
+	<br />  
+	<%= f.label :email %><br />
+	<%= f.text_field :email %>
+	<br /> 
+	<%= f.label :adresa %><br />
+	<%= f.text_field :adresa %><br />
+	<%= f.label :výška %><br />
+	<%= f.text_field :height %><br />
+	<%= f.label :váha %><br />
+	<%= f.text_field :weight %><br />
+	<%= f.label :věk %><br />
+	<%= f.text_field :age %><br />
+	 <p>
+     <%= f.label :body_type_id %><br />
+    <%=  collection_select(:contact, :body_type_id, BodyType.all, :id, :type_cz, {:prompt => true})%>
+  </p>
+</div> 
+<div style="margin-left:300px;">
+		<br />
+		 <ul >
+			<li>
+				<%= f.label :Stav_kontaktu %><br />
+			</li>  
+			<li>
+				<%= f.radio_button :state, 'Zájemce'%>Zájemce
+			</li>
+			<li>
+				<%= f.radio_button :state, 'Zajemce o hubnuti'%>Zájemce o hubnutí
+			</li>
+			<li>
+				<%= f.radio_button :state, 'Zajemce o praci'%>Zájemce o práci
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Zájemce po poradně'%>Zájemce po poradně 
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Zájemce s analýzou'%>Zájemce s analýzou
+			</li>  
+			<li>	
+				<%= f.radio_button :state, 'Opakovaný účastník poradny'%>Opakovaný účastník poradny
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Nový klient'%>Nový klient  
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Opakovaný klient'%>Opakovaný klient 
+			</li>
+				<li>
+				<%= f.radio_button :state, 'Klient s dohodou'%>Klient s dohodou 
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Zaregistrovaný klient'%>Zaregistrovaný klient
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Dlouhodobý klient'%>Dlouhodobý klient 
+			</li>
+			<li>	
+				<%= f.radio_button :state, 'Nemá zájem'%>Nemá zájem  
+			</li>
+		 </ul>			
+	 
+</div>  
+<div style="clear:left;" >
+		  	<%= f.submit 'Ulož' %>
+	
+			<% end %>
+			<br />
+		
+			<%= link_to 'Back', contacts_path %>
+
+</div>  		
+

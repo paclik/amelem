@@ -4,7 +4,7 @@
  		<th>Kontakt</th>
     <th>Volat kdy </th>
     <th>Konec</th>
-    <th>Poradna</th>
+    <th>Skončeno v</th>
     <th>Poradna kdy</th>
     <th>Info</th>
     <th>Obsah</th>
@@ -29,17 +29,17 @@
   </td> 
   <%i=i+1%>
   <td >
-     	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.poznamka != nil %>
+     	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
     </td>
    	<td>
-   		<%=h talk.call_when_time.strftime("%d-%m-%y|%H.%M")%>
+   		<%=h talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M")%>
     </td>
     <td><%=h "Ano" if talk.finished %></td>
-    <td><%=h "Ano" if talk.poradna %></td>
+    <td><%=h  talk.end_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.end_time%></td>
     <td><%=h talk.poradna_when %></td>
     <td><%=h "Ano" if talk.informace_zajem %></td>
    
-    <td ><%= link_to ("Ano", talk ,{ :title => @TEXT})  if talk.poznamka != "" %></td>
+    <td ><%= link_to ("Ano", talk ,{ :title => @TEXT}) if talk.poznamka?  %></td>
     <td><%=h talk.result %></td>
     </tr>
 <% end %>

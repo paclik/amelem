@@ -25,27 +25,31 @@
   <%=h @contact.email %>
 </div>
 <div>
+  <b>Adresa:</b>
+  <%=h @contact.adresa %>
+</div>
+<div>
   <b>Stav:</b>
   <%=h @contact.state %>
 </div>
 
 <div>
-  <b>Height:</b>
+  <b>Výška:</b>
   <%=h @contact.height %>
 </div>
 
 <div>
-  <b>Weight:</b>
+  <b>Váha:</b>
   <%=h @contact.weight %>
 </div>
 
 <div>
-  <b>Age:</b>
+  <b>Věk:</b>
   <%=h @contact.age %>
 </div>
 
 <div>
-  <b>Body type:</b>
+  <b>Tělesný typ:</b>
   <%=h @contact.body_type.type_expl_cz  if @contact.body_type%>
 </div>
 </div>

@@ -55,6 +55,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'  
   map.list 'talks/list', :controller => 'talks', :action => 'index'
   map.search_talks "/delsearch/", :controller => "talks", :action => "delsearch"
+  map.link_talks "/select_many/", :controller => "talks", :action => "select_many"
   # map.root :controller => 'contacts', :action => 'index'
   map.root :controller => 'talks', :action => 'index', :call_when_time1_d => Date.today.strftime("%d.%m.%Y") ,  :call_when_time2_d => Date.today.strftime("%d.%m.%Y"), :finished => "0"
   map.resources :contacts, :collection => {:auto_complete_for_contact_id => :get }

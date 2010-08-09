@@ -5,7 +5,7 @@
     <th>Volat kdy </th>
     <th>Konec</th>
     <th>Skončeno v</th>
-    <th>Poradna kdy</th>
+    <th>Stav</th>
     <th>Info</th>
     <th>Obsah</th>
      <th>Výsledek</th>
@@ -14,6 +14,7 @@
 <% ####   vypis jednotlivzch radku   %>   
 <% ####   i = row counter %> 
 <%i=0%>
+<% form_tag :controller => 'talks', :action => 'select_many' do %>  
 <% @talks.each do |talk| %>
 	<% @TEXT = talk.poznamka[-200..-1] if talk.poznamka != nil %>
   <% if  @highlight =~ /\Aodd/ then @highlight = 'even' else  @highlight = 'odd' end  %>
@@ -25,7 +26,7 @@
   							(i+1).to_i
   						end	
   						%>
-  						 
+   	<%=if defined?(@talks.current_page) then check_box_tag 'talk['+i.to_s+']',talk.contact_id end %>						 
   </td> 
   <%i=i+1%>
   <td >
@@ -36,13 +37,27 @@
     </td>
     <td><%=h "Ano" if talk.finished %></td>
     <td><%=h  talk.end_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.end_time%></td>
-    <td><%=h talk.poradna_when %></td>
+    <td><%=h talk.contact.state %></td>
     <td><%=h "Ano" if talk.informace_zajem %></td>
    
     <td ><%= link_to ("Ano", talk ,{ :title => @TEXT}) if talk.poznamka?  %></td>
     <td><%=h talk.result %></td>
     </tr>
 <% end %>
-
+    <% if defined?(@talks.current_page) then %>
+		<tr><td colspan=9 ><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/>Označ všechny
+				</td>
+		</tr>	
+	
+		<tr>
+	    <td colspan=9>
+	    	Vytvořit pro vybrané kontakty hovory dne 
+				<%= calendar_date_select_tag 'call_when', value= Time.now,  :clear_button => false,:locale=>"cz", :time => :mixed, :popup => :force, :size => 12	%> 
+	    	se skriptem <%= collection_select "",:script, Script.all(:order => :name), :id, :name  %>
+				<%= submit_tag value='OK',{:onclick => "return confirm('Jsi si jistý ?')"  }%>
+	    </td>
+	</tr>
+	<% end %>
+<% end %>
 
 
