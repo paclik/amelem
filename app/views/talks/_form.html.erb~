@@ -15,7 +15,7 @@
 		<tr> 
 			<td colspan="3" >
 			 <%= f.label :Příjmení_kontaktu%><br />
-			 <%= text_field_with_auto_complete :talk, :contact_name, { :size => 15 }, { :url => formatted_contacts_path(:js), :method => :get, :param_name => 'search' } %>
+			 <%= text_field_with_auto_complete :talk, :contact_name, { :size => 15 },{ :url => formatted_contacts_path(:js), :method => :get, :param_name => 'last_name' } %>
 
 			</td>	
 		</tr>

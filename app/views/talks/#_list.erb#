@@ -1,4 +1,0 @@
-<table  class="listtable">
-	<%= render :partial => 'talks/index' %> 	
-	
-</table>	

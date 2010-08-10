@@ -8,12 +8,12 @@ class Talk < ActiveRecord::Base
 
 	
 	def contact_name
-			contact.last_name if contact
+		contact.last_name if contact
 	end
 	
 		
-	def contact_name=(name)
-		self.contact = Contact.find_by_last_name(name) unless name.blank?
+	def contact_name=(contact_name)
+		self.contact = Contact.find_by_last_name(contact_name) unless contact_name.blank?
 	end
 	
 

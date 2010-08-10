@@ -4,7 +4,7 @@ class TalksController < ApplicationController
   navigation :talks
   
   
-  $cookieHash = {"contacts.last_name"=>nil,"call_when_time1_d"=>nil,"call_when_time2_d"=>nil,
+  $cookieHash = {"contacts.last_name"=>nil,"contacts.state"=>nil,"call_when_time1_d"=>nil,"call_when_time2_d"=>nil,
   "finished"=>nil,"width"=>nil,"outtransport_id_n"=>nil}
   
  ########  private section   ######################### 
@@ -91,6 +91,60 @@ end
 public 
 ####################################################
 #
+
+          
+def select_many
+  #sort_init 'id', 'desc'
+  # sort_update %w(id)
+  @itemIdField  = []
+  @scripts=Script.find(:all)
+# @assignTotransport= params[:item][:intransport_id]
+  if (params[:talk] == nil)  then 
+    redirect_to :action => 'index'
+  end
+  
+    @item_list =  params[:talk]
+    @item_list.each do |key, value|  
+        if value != "0" then
+          @itemIdField.push(value) 
+        end 
+    end 
+    @itemIdField.sort!
+    @changeId = {}
+    @retez = "	"
+    #@itemIdField.each do |key| @retez =  @retez + " , " +key end
+    #render :text => @retez
+    @itemIdField.each do |key|
+    	@talk = Talk.new
+    	@talk.contact_id= key
+			
+			@datetime =  Time.parse(params[:call_when])
+			
+			@talk.call_when_time = @datetime 
+			@talk.script_id = params[:script]
+			@talk.finished = false
+			
+			#DateTime.strptime(params[:call_when_time1_d],'%d.%m.%Y')
+			@talk.save
+			
+    end
+    redirect_to :action => 'index'
+=begin 
+    for itemId in @itemIdField 
+          @changeId[itemId.to_s] = { "outtransport_id" => params[:outtransport][:id].to_s }
+      end
+      Contact.update(@changeId.keys, @changeId.values)
+      params[:id] = params[:outtransport][:id]
+      if filter_outtransport() then
+        params[:id]=""
+        render :action => 'index'
+      else
+        index      
+    end 
+=end
+   
+  end
+
 
 def search
     
