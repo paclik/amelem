@@ -46,4 +46,5 @@ Rails::Initializer.run do |config|
   #Encoding.default_internal, Encoding.default_external = ['utf-8'] * 2
 end
 
+require 'unicode'
 require "will_paginate"

@@ -44,16 +44,19 @@
     </tr>
 <% end %>
     <% if defined?(@talks.current_page) then %>
-		<tr><td colspan=9 ><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/>Označ všechny
+		<tr><td colspan=9 ><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/>Vše --  a s označenýmy kontakty proveď jednu z následujících operací
 				</td>
 		</tr>	
 	
 		<tr>
 	    <td colspan=9>
-	    	Vytvořit pro vybrané kontakty hovory dne 
+	    	Vytvořit hovory dne 
 				<%= calendar_date_select_tag 'call_when', value= Time.now,  :clear_button => false,:locale=>"cz", :time => :mixed, :popup => :force, :size => 12	%> 
 	    	se skriptem <%= collection_select "",:script, Script.all(:order => :name), :id, :name  %>
-				<%= submit_tag value='OK',{:onclick => "return confirm('Jsi si jistý ?')"  }%>
+				<%= submit_tag value='Nové hovory',{:onclick => "return confirm('Jsi si jistý, že chceš vytvořit nové hovory?')"  }%>
+				<br/> Poslat sms nasledujícího tvaru:<br/>
+				<%=  text_field_tag :smstext , "", :size => 80 %>
+				<%= submit_tag value='SMS',{:onclick => "return confirm('Jsi si jistý posláním sms ?')"  }%>
 	    </td>
 	</tr>
 	<% end %>

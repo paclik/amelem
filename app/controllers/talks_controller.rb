@@ -1,5 +1,7 @@
 class TalksController < ApplicationController
-  
+require 'open-uri' 
+require 'unicode'
+
   before_filter :require_user, :only => [:new, :show, :edit, :update, :index, :destroy, :create]
   navigation :talks
   
@@ -91,7 +93,9 @@ end
 public 
 ####################################################
 #
-
+def sendSms
+	contents = URI.parse('http://sms.levnesms.cz/smsgate/smssend.asp?i=4080&h=541912&t=774224735&z=kOKOTE%20TO%20JE%20TEST%C2%A0').read
+end	
           
 def select_many
   #sort_init 'id', 'desc'
@@ -99,52 +103,59 @@ def select_many
   @itemIdField  = []
   @scripts=Script.find(:all)
 # @assignTotransport= params[:item][:intransport_id]
-  if (params[:talk] == nil)  then 
+	if (params[:talk] == nil )  then 
     redirect_to :action => 'index'
   end
-  
+  	
     @item_list =  params[:talk]
-    @item_list.each do |key, value|  
-        if value != "0" then
-          @itemIdField.push(value) 
-        end 
-    end 
-    @itemIdField.sort!
-    @itemIdField.uniq!
-
-    @changeId = {}
-    @retez = "	"
-    #@itemIdField.each do |key| @retez =  @retez + " , " +key end
-    #render :text => @retez
-    @itemIdField.each do |key|
-    	@talk = Talk.new
-    	@talk.contact_id= key
-			
-			@datetime =  Time.parse(params[:call_when])
-			
-			@talk.call_when_time = @datetime 
-			@talk.script_id = params[:script]
-			@talk.finished = false
-			
-			#DateTime.strptime(params[:call_when_time1_d],'%d.%m.%Y')
-			@talk.save
-			
-    end
-    redirect_to :action => 'index'
-=begin 
-    for itemId in @itemIdField 
-          @changeId[itemId.to_s] = { "outtransport_id" => params[:outtransport][:id].to_s }
-      end
-      Contact.update(@changeId.keys, @changeId.values)
-      params[:id] = params[:outtransport][:id]
-      if filter_outtransport() then
-        params[:id]=""
-        render :action => 'index'
-      else
-        index      
-    end 
-=end
-   
+    if (@item_list == nil )  then 
+    	flash[:notice] = "Nikdo nebyl vybrán"
+    
+    else	
+  		@item_list.each do |key, value|  
+					if value != "0" then
+						@itemIdField.push(value) 
+					end 
+			end 
+			@itemIdField.sort!
+			@itemIdField.uniq!
+	
+			@changeId = {}
+			@retez = "	"
+			#@itemIdField.each do |key| @retez =  @retez + " , " +key end
+			#render :text => @retez
+			flash[:notice] = ""
+			case (params[:commit]) 
+			when "SMS" then
+				@itemIdField.each do |key|
+					@contact = Contact.find(key)
+					@telefon = @contact.mob_phone.to_s.gsub(/\s+/,'') 
+					@adresa = 'http://sms.levnesms.cz/smsgate/smssend.asp?i=4080&h=541912&t=' + @telefon + '&z=' + params[:smstext]
+					@adresa.gsub! /\s+/, '%20'
+					#@adresa =  Iconv.new('US-ASCII//translit','utf-8').iconv(@adresa)
+					@adresa =  Unicode.normalize_KD(@adresa.to_s).gsub(/[^\x00-\x7F]/n,'')
+					flash[:notice] +=  URI.parse(@adresa).read
+					#flash[:notice] +=  @adresa
+				end
+			when "Nové hovory" then
+				@itemIdField.each do |key|
+					@talk = Talk.new
+					@talk.contact_id= key
+					
+					@datetime =  Time.parse(params[:call_when])
+					
+					@talk.call_when_time = @datetime 
+					@talk.script_id = params[:script]
+					@talk.finished = false
+					
+					#DateTime.strptime(params[:call_when_time1_d],'%d.%m.%Y')
+					@talk.save
+				end
+			end	
+		
+			#render :text => @contents
+		  redirect_to :action => 'index'
+		end  
   end
 
 
