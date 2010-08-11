@@ -298,8 +298,8 @@ end
     @title="Nový hovor"
     @talk.call_when_time = Time.zone.now + 600
    
-    #@contact = Contact.find(params[:contact_id])
-    #render  :text => "Nový hovor s kontaktem #{ @talk.contact.last_name }" , :layout => true 
+    @contact = Contact.find(params[:contact_id]) if params[:contact_id]
+    #render  :text => "Nový hovor s kontaktem #{ @contact.last_name } ID #{ @contact.id }" , :layout => true 
     
   end
 

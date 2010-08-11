@@ -34,7 +34,7 @@
     background-color : 	#CCCCCC; /*divne zelena ramecek kolem vsech prvku vypisu listu*/
     TEXT-DECORATION: none;
     color:black;
-    font-size: 11px; 
+    font-size: 9pt;
     border: 2px solid  	 	#777777;
     
     /*border-collapse zpusobi ze neni ramecek kol bunek*/
@@ -75,7 +75,7 @@
    
    /* background-color :lime;*/
    /*pokud bych nahodou chtel obarvit bunky tabulky*/
-    font-size: 11px; 
+    font-size: 8pt; 
    
     
 }

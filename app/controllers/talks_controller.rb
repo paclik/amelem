@@ -110,6 +110,8 @@ def select_many
         end 
     end 
     @itemIdField.sort!
+    @itemIdField.uniq!
+
     @changeId = {}
     @retez = "	"
     #@itemIdField.each do |key| @retez =  @retez + " , " +key end
@@ -161,8 +163,8 @@ def delsearch()
           params[key] = nil
   }  
   ##aby se po zresetování nastavila výchozí hodnota na zobrazování jen neukončených hovorů
-  cookies["finished"] = 0 
-  params["finished"] = 0
+  #cookies["finished"] = 0 
+  #params["finished"] = 0
   redirect_to :action => 'index'
 
 end
@@ -225,6 +227,12 @@ end
   	processParams()
   	page = params[:page] || 1
   	#DateTime.strptime(params[:call_when_time1_d],'%d.%m.%Y') if params[:call_when_time1_d]
+  	if params[:call_when_time1_d] == params[:call_when_time2_d] and   params[:call_when_time1_d] != "" then 
+  		@sort = "asc" 
+  	else
+  		@sort = "desc"
+  	end
+  	 	 	 
   	if @condition 
   	then
   		@condition =  @condition + " and contact_id LIKE #{params[:contact_id]}"  if params[:contact_id] 
@@ -232,7 +240,7 @@ end
   		@condition = "contact_id LIKE #{params[:contact_id]}"  if params[:contact_id]
   	end	
   	#@items = Item.paginate :page => page, :order => "id desc", :conditions => @condition
-    @talks = Talk.paginate :page => params[:page], :conditions => @condition, :joins => [:contact], :order => "call_when_time DESC"
+    @talks = Talk.paginate :page => params[:page], :conditions => @condition, :joins => [:contact], :order => "call_when_time " + @sort
     	#render :text => @conditions
       respond_to do |format|
       format.html # index.html.erb

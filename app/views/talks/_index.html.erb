@@ -1,14 +1,12 @@
-
 <tr>
  		<th nowrap>N. </th>     
  		<th>Kontakt</th>
+ 		<th>Tlf</th>
     <th>Volat kdy </th>
     <th>Konec</th>
     <th>Skončeno v</th>
     <th>Stav</th>
-    <th>Info</th>
-    <th>Obsah</th>
-     <th>Výsledek</th>
+    <th>Výsledek</th>
   </tr>
 
 <% ####   vypis jednotlivzch radku   %>   
@@ -32,15 +30,16 @@
     <%=if defined?(@talks.current_page) then check_box_tag 'talk['+i.to_s+']',talk.contact_id end %>		 	
   	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
     </td>
-   	<td>
+   	 <td><%=h talk.contact.mob_phone.to_s.gsub(/ /,'')  if talk.contact.mob_phone %>
+   	 </td>
+    <td>
    		<%=h talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M")%>
     </td>
+    
     <td><%=h "Ano" if talk.finished %></td>
     <td><%=h  talk.end_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.end_time%></td>
     <td><%=h talk.contact.state %></td>
-    <td><%=h "Ano" if talk.informace_zajem %></td>
-   
-    <td ><%= link_to ("Ano", talk ,{ :title => @TEXT}) if talk.poznamka?  %></td>
+       
     <td><%=h talk.result %></td>
     </tr>
 <% end %>

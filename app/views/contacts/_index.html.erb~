@@ -1,5 +1,6 @@
   <tr>
-    <th>Jméno</th>
+    <th nowrap>Nr.</th>   
+  	<th>Jméno</th>
     <th>Příjmení</th>
     <th>Mob telefon</th>
     <th>Pevná linka</th>
@@ -17,7 +18,14 @@
   <% if  @highlight =~ /\Aodd/ then @highlight = 'even' else  @highlight = 'odd' end  %>
   
   <tr id='<%= @highlight%>'>
-    <td><%=h contact.first_name %></td>
+    <td nowrap> <%= if defined?(@contacts.current_page) then
+  							(i+1).to_i + (@contacts.current_page.to_i - 1).to_i * 30 if defined?(@contacts.current_page)
+  						else
+  							(i+1).to_i
+  						end	
+  	%>
+  	 <%i=i+1%>
+  	<td><%=h contact.first_name %></td>
     <td><%= link_to contact.last_name, contact  %>
     <td><%=h contact.mob_phone %>
     <td><%=h contact.land_line %></td>

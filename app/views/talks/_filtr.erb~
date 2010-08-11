@@ -2,11 +2,11 @@
 <tr id='list-filter' class="filter" >
 
 <% form_tag ( {:controller => 'talks', :action => 'list'}, { :name => "formular"}) do %>
-	<th> </th>
-   <th>Příjmení <%= text_field_tag  "contacts.last_name" , value= params["contacts.last_name"],  :size => 15 %>
+	<th colspan = 2>
+   Příjmení <%= text_field_tag  "contacts.last_name" , value= params["contacts.last_name"],  :size => 15 %>
 
 	</th>
-	<th colspan = 2><span>Od</span> 
+	<th ><span>Od</span> 
 	<%= calendar_date_select_tag 'call_when_time1_d', value= params["call_when_time1_d"],  :clear_button => false, :time => false, :popup => :force, :size => 8	%> 
 	<br/><span>Do</span> 
 	<%= calendar_date_select_tag 'call_when_time2_d', value= params["call_when_time2_d"],  :clear_button => false, :time => false, :popup => :force, :size => 8 	%> 
@@ -31,7 +31,11 @@
 		<%= radio_button nil, :finished,"" ,{ :checked=> @check1 } %>  Vše
 	
   </th>
-	<th colspan = 4>
+   <th> 
+		Stav<br/><%= text_field_tag  "contacts.state" , value= params["contacts.state"],  :size => 10%>
+	
+  </th>
+	<th colspan = 3>
 	  <%= submit_tag 'Nastav filtr'%><br/>
 	  <% end  %> 
 	  

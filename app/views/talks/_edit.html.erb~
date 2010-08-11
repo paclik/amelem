@@ -5,7 +5,7 @@
   
 	<p>
 		jméno: <b><%=h @talk.contact.first_name if @talk.contact %> </b>  
-		příjmení: <b><%=h @talk.contact.last_name if @talk.contact  %> </b>
+		příjmení: <b><%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %></b>
 		stav: <b><%=h @talk.contact.state if @talk.contact  %> </b>
 		..........<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
 		
@@ -95,7 +95,11 @@
 				<%= f.text_area :poznamka,"cols" => 90, "rows" => 10 %>
 			</td>	
 		</tr>
-		
+		<tr> 
+			<td colspan="3" >
+			 <%= f.submit 'Ulož' %>
+			</td>	
+		</tr>
 		
 		<tr> 
 			<td colspan="3" >
@@ -107,6 +111,8 @@
 			 	 %>  
 			 	</td>	
 		</tr>
+		
+		
 		<tr> 
 			<td colspan="3" >
 				<div id="my_list">
@@ -119,11 +125,7 @@ Výpis všech hovorů s <%=h  @talk.contact.last_name if @talk.contact   %>
 			</td>	
 		</tr>
 		
-		<tr> 
-			<td colspan="3" >
-			 <%= f.submit 'Ulož' %>
-			</td>	
-		</tr>
+		
 		
 	
 

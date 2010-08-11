@@ -1,34 +1,42 @@
-<p>
-  <b>Kontakt:</b>
-   <%=h  @talk.contact.first_name if @talk.contact   %> <%=h @talk.contact.last_name if @talk.contact  %> 
-   
-</p>
-<p>
-	<b>stav: </b><%=h @talk.contact.state if @talk.contact  %> 
-</p>
-<p>
-  <b>Kdy zavolat:</b>
-  <%=h   @talk.call_when_time.strftime("%d-%m-%Y %H.%M| Den: %a | Týden:%W") if @talk.call_when_time %>
-</p>
+<div style="float: left" >
+	<b>Kontakt:</b>
+		 <%=h  @talk.contact.first_name if @talk.contact   %>
+		 <%=h @talk.contact.last_name if @talk.contact  %> <BR/>
+		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
+</div>
 
-<p>
-  <b>Hovor skončil:</b>
-  <%=h "Ano" if @talk.finished %>
-</p>
+<div  style="margin-left:300px;">
+  <b>Mob telefón:</b>
+  <%=h  @talk.contact.mob_phone %><BR/>
+  <b>Pevná linka:</b>
+  <%=h  @talk.contact.land_line %><BR/>
+  <b>Email:</b>
+  <%=h  @talk.contact.email %><BR/>
+  <b>Adresa:</b>
+  <%=h  @talk.contact.adresa %><BR/>
+</div>
+<HR/>
 
-<p>
-  <b>Poradna:</b>
-  <%=h "Ano" if @talk.poradna  %>
-</p>
+<div>
+	<b>Kdy zavolat:</b>
+	<%=h   @talk.call_when_time.strftime("%d-%m-%Y %H.%M| Den: %a | Týden:%W") if @talk.call_when_time %>
+	<BR/>
+	<b>Hovor skončil:</b>
+	<%=h "Ano" if @talk.finished %>
+	<BR/>
+	<b>Poradna:</b>
+	<%=h "Ano" if @talk.poradna  %>
+	<BR/>
+	<b>Poznámka:</b>
+	<%=h @talk.poznamka %>
+	<BR/>
+</div>
+<HR/>
 
-<p>
-  <b>Poznámka:</b>
-  <%=h @talk.poznamka %>
-</p>
-
-<%= link_to 'Editovat', edit_talk_path(@talk) %> |
+<%= link_to 'Editovat hovor', edit_talk_path(@talk) %> |
+<%= link_to 'Editovat kontakt', edit_contact_path(@talk.contact) %> |
 <%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact} %> |
-<%= link_to 'Přehled hovorů', talks_path %>
+
 
 <p>
 Výpis všech hovorů s <%=h  @talk.contact.last_name if @talk.contact   %>

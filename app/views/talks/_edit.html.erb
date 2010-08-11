@@ -1,22 +1,29 @@
 <div class="showRecord">
 <% form_for(@talk) do |f| %>
+
+<div style="float: left" >
+	<b>Kontakt:</b>
+		 <%=h  @talk.contact.first_name if @talk.contact   %>
+		 <%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %><BR/>
+		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
+</div>
+
+<div  style="margin-left:300px;">
+  <b>Mob telefón:</b>
+  <%=h  @talk.contact.mob_phone.to_s.gsub(/ /,'')  %><BR/>
+  <b>Pevná linka:</b>
+  <%=h  @talk.contact.land_line.to_s.gsub(/ /,'')  %><BR/>
+  <b>Email:</b>
+  <%= text_field_tag "email",value=@talk.contact.email,{:size => 30} %> <BR/>
+  <b>Adresa:</b>
+  <%=h  @talk.contact.adresa %><BR/>
+</div>
+<HR/>
+
+
   <%= f.error_messages %>
   <%=  f.hidden_field :contact_id %>
-  
-	<p>
-		jméno: <b><%=h @talk.contact.first_name if @talk.contact %> </b>  
-		příjmení: <b><%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %></b>
-		stav: <b><%=h @talk.contact.state if @talk.contact  %> </b>
-		..........<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
-		
-	</p>	
-	
-	
-	<p>
-		telefon: <%=h @talk.contact.mob_phone if @talk.contact %>  email: 
-			<%= text_field_tag "email",value=@talk.contact.email,{:size => 30} %> 
-	</p>
-	
+ 	
   <table>    
 	<tr align="LEFT"> 
 			<td colspan="3" >
@@ -27,6 +34,8 @@
   			<%= f.radio_button :result,'Schránka'%>Schránka
   			<%= f.radio_button :result, 'Omyl'%>Omyl
   			<%= f.radio_button :result, 'Nemá zájem'%>Nemá zájem
+  			<%= f.radio_button :result, 'Tlf. nexistuje'%>Tlf. neexistuje
+  			<%= f.radio_button :result, 'OK'%>OK
 			</td>	
 		
 		</tr>	
@@ -72,9 +81,13 @@
 			</td>	
 		</tr>  
 		<tr>
-			<td colspan = 3 > 
+			<td  > 
 				<%= f.submit 'Ulož' %>	
 			</td>
+			<td colspan = 2	>
+				<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
+			</td>	
+	
 		</tr>
 		<tr>  
 			<td colspan="3" >

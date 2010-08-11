@@ -7,9 +7,9 @@
 
 <div  style="margin-left:300px;">
   <b>Mob telefón:</b>
-  <%=h  @talk.contact.mob_phone %><BR/>
+  <%=h  @talk.contact.mob_phone.to_s.gsub(/ /,'') %><BR/>
   <b>Pevná linka:</b>
-  <%=h  @talk.contact.land_line %><BR/>
+  <%=h  @talk.contact.land_line.to_s.gsub(/ /,'') %><BR/>
   <b>Email:</b>
   <%=h  @talk.contact.email %><BR/>
   <b>Adresa:</b>

@@ -76,6 +76,7 @@ body {
   border-color:  #f4fcf2;
   padding: 0px; }
   
+
   #example_3.example_content .content_wrapper {
     background-color: #2f3c4c; 
     padding: 0px; 
