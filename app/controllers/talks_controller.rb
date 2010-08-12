@@ -135,8 +135,9 @@ def select_many
 					#@adresa =  Iconv.new('US-ASCII//translit','utf-8').iconv(@adresa)
 					@adresa =  Unicode.normalize_KD(@adresa.to_s).gsub(/[^\x00-\x7F]/n,'')
 					flash[:notice] +=  URI.parse(@adresa).read
-					#flash[:notice] +=  @adresa
+					
 				end
+				flash[:notice] +=  @adresa
 			when "Nové hovory" then
 				@itemIdField.each do |key|
 					@talk = Talk.new
