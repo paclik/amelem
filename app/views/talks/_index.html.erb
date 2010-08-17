@@ -37,7 +37,7 @@
     </td>
     
     <td><%=h talk.end_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.end_time  %></td>
-    <td><%=h talk.delka_hovoru if talk.finished%></td>
+    <td align="center"><%=h talk.delka_hovoru if talk.finished%></td>
     <td><%=h talk.contact.state %></td>
        
     <td><%=h talk.result %></td>
