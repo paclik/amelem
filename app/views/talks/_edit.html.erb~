@@ -1,22 +1,29 @@
 <div class="showRecord">
 <% form_for(@talk) do |f| %>
+
+<div style="float: left" >
+	<b>Kontakt:</b>
+		 <%=h  @talk.contact.first_name if @talk.contact   %>
+		 <%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %><BR/>
+		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
+</div>
+
+<div  style="margin-left:300px;">
+  <b>Mob telefón:</b>
+  <%=h  @talk.contact.mob_phone.to_s.gsub(/ /,'')  %><BR/>
+  <b>Pevná linka:</b>
+  <%=h  @talk.contact.land_line.to_s.gsub(/ /,'')  %><BR/>
+  <b>Email:</b>
+  <%= text_field_tag "email",value=@talk.contact.email,{:size => 30} %> <BR/>
+  <b>Adresa:</b>
+  <%=h  @talk.contact.adresa %><BR/>
+</div>
+<HR/>
+
+
   <%= f.error_messages %>
   <%=  f.hidden_field :contact_id %>
-  
-	<p>
-		jméno: <b><%=h @talk.contact.first_name if @talk.contact %> </b>  
-		příjmení: <b><%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %></b>
-		stav: <b><%=h @talk.contact.state if @talk.contact  %> </b>
-		..........<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
-		
-	</p>	
-	
-	
-	<p>
-		telefon: <%=h @talk.contact.mob_phone if @talk.contact %>  email: 
-			<%= text_field_tag "email",value=@talk.contact.email,{:size => 30} %> 
-	</p>
-	
+ 	
   <table>    
 	<tr align="LEFT"> 
 			<td colspan="3" >
@@ -27,6 +34,8 @@
   			<%= f.radio_button :result,'Schránka'%>Schránka
   			<%= f.radio_button :result, 'Omyl'%>Omyl
   			<%= f.radio_button :result, 'Nemá zájem'%>Nemá zájem
+  			<%= f.radio_button :result, 'Tlf. nexistuje'%>Tlf. neexistuje
+  			<%= f.radio_button :result, 'OK'%>OK
 			</td>	
 		
 		</tr>	
@@ -49,14 +58,16 @@
 		</tr>
 		<tr> 
 			<td >
-				<%= submit_to_remote 'button', 'Start hov.',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, :update => "start_hovoru" %>  
+				<%= submit_to_remote 'button', 'Start hov.',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, 
+				:update => "start_hovoru",:complete => "new Effect.Fade('start_hovoru',({ duration: 3.0, from: 0, to: 1}))" %>  
 				<span id="start_hovoru">
          	<%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.start_time
           %> 
 				</span>
 			</td >
 			<td colspan =2 >
-				<%= submit_to_remote 'button', 'Stop hov.',  :url => {:action => :ajax_respond_stop_talk ,:id => @talk}, :update => "stop_hovoru" %>  
+				<%= submit_to_remote 'button', 'Stop hov.',  :url => {:action => :ajax_respond_stop_talk ,:id => @talk },
+						 :with => "'cas=' + $('disp').value", :update => "stop_hovoru",:complete => "new Effect.Highlight('stop_hovoru')" %>  
 				<span id="stop_hovoru">
          	<%= @talk.end_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.end_time
           %> 
@@ -64,7 +75,25 @@
           <%= f.check_box :finished , :disabled=> true  %>
 		     
 				</span>
-			  </td>	
+				<br/>
+				<%=  hidden_field "", :cas %>
+				
+				<button type='button' onClick="_cas.value='true';email.value='kokot'" id='butt3'>Start</button>
+				<button type='button' onClick="_cas.value='false'" id='butt3'>Stop</button>
+				<table align=center>
+							<div align=center>&nbsp;Stopwatch-without-lap</div>
+							<tr><td><input type='text' id='disp' maxlength=12 readonly /></td></tr>
+							<tr><td><button type='button' onclick='ss()' id='butt'>Start/Stop</button>
+							<button type='button' onclick='r()' id='butt2'>Reset</button>
+							</td></tr>
+					</table>
+					<%= periodically_call_remote :update => 'time_div', 
+            :url => {:action => :ajax_respond_timer}, :condition => "$('_cas').value == 'true'",
+:frequency =>2.0 %>
+                             <div id='time_div'>
+                             </div>	
+
+          </td>	
 		</tr>
 		<tr>  
 			<td colspan="3" >
@@ -72,9 +101,13 @@
 			</td>	
 		</tr>  
 		<tr>
-			<td colspan = 3 > 
+			<td  > 
 				<%= f.submit 'Ulož' %>	
 			</td>
+			<td colspan = 2	>
+				<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
+			</td>	
+	
 		</tr>
 		<tr>  
 			<td colspan="3" >

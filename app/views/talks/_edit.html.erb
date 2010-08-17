@@ -51,30 +51,31 @@
 				
 			</td>
 			<td>
-				<%= f.label :Zavolat_kdy %><BR/>
+				<%= f.label :Termín_hovoru %><BR/>
 				<%= f.datetime_select :call_when_time, :order => [:day, :month, :year],:minute_step => 5, :use_month_numbers => true %>
 			</td>
 			
 		</tr>
 		<tr> 
-			<td >
-				<%= submit_to_remote 'button', 'Start hov.',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, :update => "start_hovoru" %>  
+			<td colspan =1>
+				<%= submit_to_remote 'button1', 'Start',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, 
+				:with => "'akce=' + button1.value", :update => "start_hovoru", 
+				:complete => "new Effect.Highlight('start_hovoru');
+				 if (disp.value == '00:00:00.000') {ss()} else{r()};if (button1.value=='Start') { button1.value='Stop'} else { button1.value='Start'}" %>  
 				<span id="start_hovoru">
-         	<%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.start_time
-          %> 
-				</span>
-			</td >
-			<td colspan =2 >
-				<%= submit_to_remote 'button', 'Stop hov.',  :url => {:action => :ajax_respond_stop_talk ,:id => @talk}, :update => "stop_hovoru" %>  
-				<span id="stop_hovoru">
-         	<%= @talk.end_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.end_time
-          %> 
-          <%= f.label :hovor_ukončen %>
-          <%= f.check_box :finished , :disabled=> true  %>
-		     
-				</span>
-			  </td>	
+         	<b> Hovor od: </b><%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M.%S")  if @talk.start_time
+         	%>	<b>  Délka: </b>
+         	<%= @talk.delka_hovoru  if @talk.end_time
+         	%>
+          </span>
+          
+					
+          </td>	
+          <td colspan = 2	>
+          	<input type='text' id='disp' maxlength=12 readonly /> 
+          </td>	
 		</tr>
+		
 		<tr>  
 			<td colspan="3" >
 				<HR/>

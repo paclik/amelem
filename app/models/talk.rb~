@@ -3,6 +3,8 @@ class Talk < ActiveRecord::Base
 	belongs_to :script
 	validates_presence_of :contact_id
 	
+	 
+	
   cattr_reader :per_page
   @@per_page = 30
 

@@ -1,14 +1,12 @@
-
 <tr>
  		<th nowrap>N. </th>     
  		<th>Kontakt</th>
+ 		<th>Tlf</th>
     <th>Volat kdy </th>
     <th>Konec</th>
     <th>Skončeno v</th>
     <th>Stav</th>
-    <th>Info</th>
-    <th>Obsah</th>
-     <th>Výsledek</th>
+    <th>Výsledek</th>
   </tr>
 
 <% ####   vypis jednotlivzch radku   %>   
@@ -32,29 +30,33 @@
     <%=if defined?(@talks.current_page) then check_box_tag 'talk['+i.to_s+']',talk.contact_id end %>		 	
   	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
     </td>
-   	<td>
+   	 <td><%=h talk.contact.mob_phone.to_s.gsub(/ /,'')  if talk.contact.mob_phone %>
+   	 </td>
+    <td>
    		<%=h talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M")%>
     </td>
+    
     <td><%=h "Ano" if talk.finished %></td>
     <td><%=h  talk.end_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.end_time%></td>
     <td><%=h talk.contact.state %></td>
-    <td><%=h "Ano" if talk.informace_zajem %></td>
-   
-    <td ><%= link_to ("Ano", talk ,{ :title => @TEXT}) if talk.poznamka?  %></td>
+       
     <td><%=h talk.result %></td>
     </tr>
 <% end %>
     <% if defined?(@talks.current_page) then %>
-		<tr><td colspan=9 ><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/>Označ všechny
+		<tr><td colspan=9 ><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/>Vše --  a s označenýmy kontakty proveď jednu z následujících operací
 				</td>
 		</tr>	
 	
 		<tr>
 	    <td colspan=9>
-	    	Vytvořit pro vybrané kontakty hovory dne 
+	    	Vytvořit hovory dne 
 				<%= calendar_date_select_tag 'call_when', value= Time.now,  :clear_button => false,:locale=>"cz", :time => :mixed, :popup => :force, :size => 12	%> 
 	    	se skriptem <%= collection_select "",:script, Script.all(:order => :name), :id, :name  %>
-				<%= submit_tag value='OK',{:onclick => "return confirm('Jsi si jistý ?')"  }%>
+				<%= submit_tag value='Nové hovory',{:onclick => "return confirm('Jsi si jistý, že chceš vytvořit nové hovory?')"  }%>
+				<br/> Poslat sms nasledujícího tvaru:<br/>
+				<%=  text_field_tag :smstext , "", :size => 80 %>
+				<%= submit_tag value='SMS',{:onclick => "return confirm('Jsi si jistý posláním sms ?')"  }%>
 	    </td>
 	</tr>
 	<% end %>

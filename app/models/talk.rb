@@ -18,5 +18,18 @@ class Talk < ActiveRecord::Base
 		self.contact = Contact.find_by_last_name(contact_name) unless contact_name.blank?
 	end
 	
+	def delka_hovoru
+		if (start_time  == nil) or (end_time  == nil)  then  return "" end
+		diff_seconds = (end_time - start_time).round 
+		diftime_sec = diff_seconds % 60
+			diftime_min = (diff_seconds/60)
+			if (diff_seconds >0)then
+				@retez = diftime_min.to_s + " min " + diftime_sec.to_s + " 	s"
+			else
+				@retez = ""
+			end
+			@retez.to_s 	
+	end
+
 
 end

@@ -4,7 +4,8 @@ require 'unicode'
 
   before_filter :require_user, :only => [:new, :show, :edit, :update, :index, :destroy, :create]
   navigation :talks
-  
+  $start_timer = false
+  $counter = 5
   
   $cookieHash = {"contacts.last_name"=>nil,"contacts.state"=>nil,"call_when_time1_d"=>nil,"call_when_time2_d"=>nil,
   "finished"=>nil,"width"=>nil,"outtransport_id_n"=>nil}
@@ -14,6 +15,7 @@ private
 ####################################################
 #
 #
+
 
 def filter()
     processParams()
@@ -211,13 +213,21 @@ end
   
   def ajax_respond_start_talk 
   	@talk = Talk.find(params[:id])
-  	Talk.update (@talk,{ :start_time => Time.now })
+  	case params[:akce]
+  	when "Start"	
+  		Talk.update (@talk,{ :start_time => Time.now })
+  	when "Stop"	
+  		Talk.update (@talk,{ :finished => true })
+  		Talk.update (@talk,{ :end_time => Time.now })
+  	end	
   	@talk = Talk.find(params[:id])
-   	render  :text => @talk.start_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") ,  :layout => false
-   	 
+  	@delka =  @talk.delka_hovoru
+  	render  :text => "<b>Hovor začal:</b>" +"  "+ @talk.start_time.localtime.strftime("%H.%M.%S") +"  "+" <b>Délka hovoru:</b>#{@delka}" ,  :layout => false
+   	
   end	
   
   def ajax_respond_stop_talk 
+  	$start_timer = false
   	@talk = Talk.find(params[:id])
   	Talk.update (@talk,{ :finished => true })
   	Talk.update (@talk,{ :end_time => Time.now })
@@ -225,8 +235,15 @@ end
   	render  :text => @talk.end_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") +"  "+" <b>Hovor ukončen:</b><input checked='checked' id='talk_finished' name='talk[finished]' type='checkbox' value='1' 'disabled'/>",  :layout => false
    	 
   end	
-  
-  def ajax_respond_clear 
+
+ 	def ajax_respond_timer
+  	
+  	render  :text => Time.new.localtime.strftime("%d-%m-%Y | %H.%M.%S") ,  :layout => false
+   	 
+  end	
+ 	
+ 	
+ 	def ajax_respond_clear 
   	result_string = '<span><img src="/images/ajax-loader.gif" />Vyhledávám..</span>'
   	render  :text => result_string,  :layout => false
   	#render :file => 'TimeAdd.png', :type => 'image/png',  :layout => false

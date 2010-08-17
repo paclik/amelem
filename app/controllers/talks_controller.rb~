@@ -4,7 +4,8 @@ require 'unicode'
 
   before_filter :require_user, :only => [:new, :show, :edit, :update, :index, :destroy, :create]
   navigation :talks
-  
+  $start_timer = false
+  $counter = 5
   
   $cookieHash = {"contacts.last_name"=>nil,"contacts.state"=>nil,"call_when_time1_d"=>nil,"call_when_time2_d"=>nil,
   "finished"=>nil,"width"=>nil,"outtransport_id_n"=>nil}
@@ -135,8 +136,9 @@ def select_many
 					#@adresa =  Iconv.new('US-ASCII//translit','utf-8').iconv(@adresa)
 					@adresa =  Unicode.normalize_KD(@adresa.to_s).gsub(/[^\x00-\x7F]/n,'')
 					flash[:notice] +=  URI.parse(@adresa).read
-					#flash[:notice] +=  @adresa
+					
 				end
+				flash[:notice] +=  @adresa
 			when "Nové hovory" then
 				@itemIdField.each do |key|
 					@talk = Talk.new
@@ -212,11 +214,13 @@ end
   	@talk = Talk.find(params[:id])
   	Talk.update (@talk,{ :start_time => Time.now })
   	@talk = Talk.find(params[:id])
+  	$start_timer = true
    	render  :text => @talk.start_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") ,  :layout => false
    	 
   end	
   
   def ajax_respond_stop_talk 
+  	$start_timer = false
   	@talk = Talk.find(params[:id])
   	Talk.update (@talk,{ :finished => true })
   	Talk.update (@talk,{ :end_time => Time.now })
@@ -224,8 +228,15 @@ end
   	render  :text => @talk.end_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") +"  "+" <b>Hovor ukončen:</b><input checked='checked' id='talk_finished' name='talk[finished]' type='checkbox' value='1' 'disabled'/>",  :layout => false
    	 
   end	
-  
-  def ajax_respond_clear 
+
+ 	def ajax_respond_timer
+  	
+  	render  :text => Time.new.localtime.strftime("%d-%m-%Y | %H.%M.%S") ,  :layout => false
+   	 
+  end	
+ 	
+ 	
+ 	def ajax_respond_clear 
   	result_string = '<span><img src="/images/ajax-loader.gif" />Vyhledávám..</span>'
   	render  :text => result_string,  :layout => false
   	#render :file => 'TimeAdd.png', :type => 'image/png',  :layout => false

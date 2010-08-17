@@ -161,3 +161,15 @@ td {
   }
   
   form.ftag div { display: inline }
+  
+  #disp 
+	{
+	background-color:black;
+	font-size: 1.75em;
+	color: white;
+	width: 6em;
+	font-family: "Times New Roman";
+	padding: 0.15em;
+	border-right-width:0;
+	}
+	
