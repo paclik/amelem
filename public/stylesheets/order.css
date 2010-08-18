@@ -182,3 +182,15 @@ td {
 	{
 		background-color:OrangeRed ;
 	}
+	
+	#ulozit_1
+	{
+	/*visibility:hidden; background-color:red ;*/
+	display:none;
+	font-size: 2.75em;
+	color: red;
+	width: 6em;
+	font-family: "Times New Roman";
+	padding: 0.15em;
+	border-right-width:0;
+	}

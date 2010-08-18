@@ -1,11 +1,13 @@
 <div class="showRecord">
-<% form_for(@talk) do |f| %>
+<% remote_form_for(@talk, :create =>"$('ulozit').appear(); return false;", :complete =>"$('ulozit').fade({ duration: 2.0, from: 1, to: 0}); return false;" ) do |f| %>
 
 <div style="float: left" >
 	<b>Kontakt:</b>
 		 <%=h  @talk.contact.first_name if @talk.contact   %>
 		 <%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %><BR/>
 		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
+		 
+		 
 </div>
 
 <div  style="margin-left:300px;">
@@ -59,9 +61,12 @@
 		<tr> 
 			<td colspan =1>
 				<%= submit_to_remote 'button1', 'Start',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, 
-				:with => "'akce=' + button1.value", :update => "start_hovoru", 
+				:with => "'akce=' + button1.value + $('_disp').value",
+				:other =>"'timer=' + $('_disp').value",
+				:update => "start_hovoru", 
 				:create => "if (disp.value == '00:00:00.000') {ss()} else{ss()};if (button1.value=='Start') { button1.value='Stop';_disp.className='start';} else { button1.value='Start';_disp.className='stop';}",
-				:complete => "new Effect.Highlight('start_hovoru');if (button1.value=='Start') {r()}" %>  
+				:complete => "new Effect.Highlight('start_hovoru');if (button1.value=='Start') {r()}"	
+				%>  
 				<span id="start_hovoru">
          	<b> Hovor od: </b><%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M.%S")  if @talk.start_time
          	%>	<b>  Délka: </b>
@@ -84,12 +89,12 @@
 		</tr>  
 		<tr>
 			<td  > 
-				<%= f.submit 'Ulož' %>	
+				<%= f.submit 'Ulož' %><div id="ulozit" style="display:none; text-decoration:blink; background:red; border:1px solid #333;">Ukládám</div>
 			</td>
 			<td colspan = 2	>
 				<b><%= link_to "Nový hovor" , {:controller => "talks", :action => "new", :contact_id => @talk.contact_id } %></b>
 			</td>	
-	
+			
 		</tr>
 		<tr>  
 			<td colspan="3" >
