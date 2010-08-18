@@ -219,8 +219,7 @@ end
   def ajax_respond_start_talk 
   	@talk = Talk.find(params[:id])
   	#akce = "Stop00:00:10.833" nebo "Start00:00:10.833"
-
-  	@akce = params[:akce][0..-13]
+   	@akce = params[:akce][0..-13]
     cas =  params[:akce][-12..-1]
   	@casInSec =  cas[-6..-5].to_i + cas[-9..-8].to_i * 60 + cas[-12..-11].to_i * 3600
   	case @akce
@@ -381,7 +380,7 @@ end
   # PUT /talks/1
   # PUT /talks/1.xml
   def update
-    
+   
   	@talk = Talk.find(params[:id])
     if (params[:email] != @talk.contact.email) then 
     	Contact.update(@talk.contact_id,{:email=>params[:email]})

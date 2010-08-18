@@ -1,3 +1,4 @@
+
 <div class="showRecord">
 <% remote_form_for(@talk, :create =>"$('ulozit').appear(); return false;", :complete =>"$('ulozit').fade({ duration: 2.0, from: 1, to: 0}); return false;" ) do |f| %>
 
@@ -64,8 +65,8 @@
 				:with => "'akce=' + button1.value + $('_disp').value",
 				:other =>"'timer=' + $('_disp').value",
 				:update => "start_hovoru", 
-				:create => "if (disp.value == '00:00:00.000') {ss()} else{ss()};if (button1.value=='Start') { button1.value='Stop';_disp.className='start';} else { button1.value='Start';_disp.className='stop';}",
-				:complete => "new Effect.Highlight('start_hovoru');if (button1.value=='Start') {r()}"	
+				:create => " if (disp.value == '00:00:00.000') {ss()} else{ss()};if (button1.value=='Start') { button1.value='Stop';_disp.className='start';$('ulozit').appear();} else { button1.value='Start';_disp.className='stop';$('ulozit').appear();}",
+				:complete => "$('ulozit').fade();if (button1.value=='Start') {r()}"	
 				%>  
 				<span id="start_hovoru">
          	<b> Hovor od: </b><%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M.%S")  if @talk.start_time
@@ -77,7 +78,7 @@
 					
           </td>	
           <td colspan = 2	>
-          	<%= text_field "", :disp , :size => 10 , :class => "stop"	%>
+          	<%= text_field "", :disp , :size => 10 , :class => "stop", :disabled => 'disabled'	%>
                     	
           </td>	
 		</tr>
@@ -101,18 +102,25 @@
 				<HR/>
 			</td>	
 		</tr>  
+		<tr>  
+			<td colspan="3" >
+			 
+				<%=  button_to_function "Schovej skript", "if (schovej.value == 'Schovej skript') { document.getElementById('skript').style.display='none'; schovej.value = 'Rozbal skript'; return false;} else {$('skript').show(); schovej.value = 'Schovej skript';return false;}", :id => "schovej"  %>
 		
+				</td>	
+		</tr>  
 		<tr> 
-		
-			<td colspan="3" class="skript" >
-				<%= f.label :Skript %> <BR/>
+			<td  colspan="3" class="skript" >
+			<div id = "skript" >
+				<%= f.label :Skript %>
 				<%=  sanitize(@talk.script.message) if  @talk.script %>
+			</div>	
 			</td>	
 		</tr>
 		<tr> 
 			<td colspan="3" class="skript">
 				<%= f.label :Obsah_hovoru %><br />
-				<%= f.text_area :poznamka,"cols" => 90, "rows" => 10 %>
+				<%= f.text_area :poznamka,"cols" =>100, "rows" => 10 %>
 			</td>	
 		</tr>
 		<tr> 
