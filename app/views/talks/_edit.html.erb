@@ -60,7 +60,7 @@
 			<td colspan =1>
 				<%= submit_to_remote 'button1', 'Start',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, 
 				:with => "'akce=' + button1.value", :update => "start_hovoru", 
-				:create => "if (disp.value == '00:00:00.000') {ss()} else{ss()};if (button1.value=='Start') { button1.value='Stop'} else { button1.value='Start'}",
+				:create => "if (disp.value == '00:00:00.000') {ss()} else{ss()};if (button1.value=='Start') { button1.value='Stop';_disp.className='start';} else { button1.value='Start';_disp.className='stop';}",
 				:complete => "new Effect.Highlight('start_hovoru');if (button1.value=='Start') {r()}" %>  
 				<span id="start_hovoru">
          	<b> Hovor od: </b><%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M.%S")  if @talk.start_time
@@ -72,7 +72,9 @@
 					
           </td>	
           <td colspan = 2	>
-          	<input type='text' id='disp' maxlength=12 readonly /> 
+          	<%= text_field "", :disp , :size => 10 , :class => "stop"	%>
+          	<button type='button' onClick="_disp.className='start'" >green</button>
+          	
           </td>	
 		</tr>
 		

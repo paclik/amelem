@@ -51,50 +51,31 @@
 				
 			</td>
 			<td>
-				<%= f.label :Zavolat_kdy %><BR/>
+				<%= f.label :Termín_hovoru %><BR/>
 				<%= f.datetime_select :call_when_time, :order => [:day, :month, :year],:minute_step => 5, :use_month_numbers => true %>
 			</td>
 			
 		</tr>
 		<tr> 
-			<td >
-				<%= submit_to_remote 'button', 'Start hov.',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, 
-				:update => "start_hovoru",:complete => "new Effect.Fade('start_hovoru',({ duration: 3.0, from: 0, to: 1}))" %>  
+			<td colspan =1>
+				<%= submit_to_remote 'button1', 'Start',  :url => {:action => :ajax_respond_start_talk ,:id => @talk}, 
+				:with => "'akce=' + button1.value", :update => "start_hovoru", 
+				:create => "if (disp.value == '00:00:00.000') {ss()} else{ss()};if (button1.value=='Start') { button1.value='Stop'} else { button1.value='Start'}",
+				:complete => "new Effect.Highlight('start_hovoru');if (button1.value=='Start') {r()}" %>  
 				<span id="start_hovoru">
-         	<%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.start_time
-          %> 
-				</span>
-			</td >
-			<td colspan =2 >
-				<%= submit_to_remote 'button', 'Stop hov.',  :url => {:action => :ajax_respond_stop_talk ,:id => @talk },
-						 :with => "'cas=' + $('disp').value", :update => "stop_hovoru",:complete => "new Effect.Highlight('stop_hovoru')" %>  
-				<span id="stop_hovoru">
-         	<%= @talk.end_time.localtime.strftime("%d-%m-%Y |  %H.%M")  if @talk.end_time
-          %> 
-          <%= f.label :hovor_ukončen %>
-          <%= f.check_box :finished , :disabled=> true  %>
-		     
-				</span>
-				<br/>
-				<%=  hidden_field "", :cas %>
-				
-				<button type='button' onClick="_cas.value='true';email.value='kokot'" id='butt3'>Start</button>
-				<button type='button' onClick="_cas.value='false'" id='butt3'>Stop</button>
-				<table align=center>
-							<div align=center>&nbsp;Stopwatch-without-lap</div>
-							<tr><td><input type='text' id='disp' maxlength=12 readonly /></td></tr>
-							<tr><td><button type='button' onclick='ss()' id='butt'>Start/Stop</button>
-							<button type='button' onclick='r()' id='butt2'>Reset</button>
-							</td></tr>
-					</table>
-					<%= periodically_call_remote :update => 'time_div', 
-            :url => {:action => :ajax_respond_timer}, :condition => "$('_cas').value == 'true'",
-:frequency =>2.0 %>
-                             <div id='time_div'>
-                             </div>	
-
+         	<b> Hovor od: </b><%= @talk.start_time.localtime.strftime("%d-%m-%Y |  %H.%M.%S")  if @talk.start_time
+         	%>	<b>  Délka: </b>
+         	<%= @talk.delka_hovoru  if @talk.end_time
+         	%>
+          </span>
+          
+					
+          </td>	
+          <td colspan = 2	>
+          	<input type='text' id='disp' maxlength=12 readonly /> 
           </td>	
 		</tr>
+		
 		<tr>  
 			<td colspan="3" >
 				<HR/>

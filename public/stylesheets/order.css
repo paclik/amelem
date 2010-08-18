@@ -162,9 +162,9 @@ td {
   
   form.ftag div { display: inline }
   
-  #disp 
+  #_disp 
 	{
-	background-color:red;
+	
 	font-size: 1.75em;
 	color: white;
 	width: 6em;
@@ -173,3 +173,12 @@ td {
 	border-right-width:0;
 	}
 	
+	.start 
+	{
+		background-color:LimeGreen ;
+	}
+	
+	.stop
+	{
+		background-color:OrangeRed ;
+	}

@@ -14,7 +14,7 @@
 	} 
 	else 
 	{
-		t[4]=setInterval(disp, 43);
+		t[4]=setInterval(disp, 143);
 	}
 	}
 

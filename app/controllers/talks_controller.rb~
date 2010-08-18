@@ -16,6 +16,7 @@ private
 #
 #
 
+
 def filter()
     processParams()
     @cookie = ""
@@ -212,11 +213,17 @@ end
   
   def ajax_respond_start_talk 
   	@talk = Talk.find(params[:id])
-  	Talk.update (@talk,{ :start_time => Time.now })
+  	case params[:akce]
+  	when "Start"	
+  		Talk.update (@talk,{ :start_time => Time.now })
+  	when "Stop"	
+  		Talk.update (@talk,{ :finished => true })
+  		Talk.update (@talk,{ :end_time => Time.now })
+  	end	
   	@talk = Talk.find(params[:id])
-  	$start_timer = true
-   	render  :text => @talk.start_time.localtime.strftime("%d-%m-%Y | %H.%M.%S") ,  :layout => false
-   	 
+  	@delka =  @talk.delka_hovoru
+  	render  :text => "<b>Hovor začal:</b>" +"  "+ @talk.start_time.localtime.strftime("%H.%M.%S") +"  "+" <b>Délka hovoru:</b>#{@delka}" ,  :layout => false
+   	
   end	
   
   def ajax_respond_stop_talk 

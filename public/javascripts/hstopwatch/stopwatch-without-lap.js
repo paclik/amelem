@@ -45,7 +45,7 @@
 	function load() 
 	{
 	t[5]=new Date(1970, 1, 1, 0, 0, 0, 0).valueOf();
-	t[6]=document.getElementById('disp');
+	t[6]=document.getElementById('_disp');
 	disp();
 	}
 
