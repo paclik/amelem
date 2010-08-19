@@ -2,15 +2,24 @@
 		
 			<% form_tag request.path, :method => 'get' do %>
 			<th>
-				<%= text_field_tag :first_name, params[:first_name], {:size =>10} %>
+				
+			</th>
+			<th>
+				<%= text_field_tag :first_name, params[:first_name], {:size =>8} %>
 			</th>	
 			<th>
-				<%= text_field_tag :last_name, params[:last_name],  {:size =>10}  %>
+				<%= text_field_tag :last_name, params[:last_name],  {:size =>8}  %>
 			</th>	
 			<th colspan = 2>
-				<%= text_field_tag :mob_phone, params[:mob_phone],  {:size =>15} %>
+				<%= text_field_tag :mob_phone, params[:mob_phone],  {:size =>8} %>
 			</th>	
 			<th>
+				<%= text_field_tag :email, params[:email],  {:size =>8}  %>
+			</th>	
+			<th >
+				<%= text_field_tag :state, params[:state],  {:size =>8} %>
+			</th>	
+			<th colspan = 4>
 				<%= submit_tag 'Nastav filtr'%>
 			</th>	 
 			<% end %>
