@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   $Stavy = Array['Doporučení', 'Zajemce o hubnuti','Zajemce o praci','Zájemce po poradně', 'Zájemce s analýzou','Opakovaný účastník poradny',
    'Nový klient' ,'Opakovaný klient', 'Klient s dohodou', 'Zaregistrovaný klient', 'Dlouhodobý klient', 'Nemá zájem'] 
-  $StavyHash = { 	'Doporučení' => 'Doporučení', 'Zajemce o hubnuti' =>  'Zajemce o hubnuti',
+   $StavyHash = { 	'Doporučení' => 'Doporučení', 'Zajemce o hubnuti' =>  'Zajemce o hubnuti',
   	'Zajemce o praci' =>'Zajemce o praci','Zájemce po poradně' =>'Zájemce po poradně', 
   	'Zájemce s analýzou' =>'Zájemce s analýzou',	'Opakovaný účastník poradny' =>'Opakovaný účastník poradny',
   	'Nový klient'  => 'Nový klient',	'Opakovaný klient' =>'Opakovaný klient',

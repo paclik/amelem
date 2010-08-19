@@ -3,39 +3,39 @@
 
 <% form_tag ( {:controller => 'talks', :action => 'list'}, { :name => "formular"}) do %>
 	<th colspan = 2>
-   Příjmení <%= text_field_tag  "contacts.last_name" , value= params["contacts.last_name"],  :size => 15 %>
+   Příjmení <%= text_field_tag  "contacts.last_name" , value= params["contacts.last_name"],  :size => 12 %>
 
 	</th>
-	<th ><span>Od</span> 
-	<%= calendar_date_select_tag 'call_when_time1_d', value= params["call_when_time1_d"],  :clear_button => false, :time => false, :popup => :force, :size => 8	%> 
-	<br/><span>Do</span> 
-	<%= calendar_date_select_tag 'call_when_time2_d', value= params["call_when_time2_d"],  :clear_button => false, :time => false, :popup => :force, :size => 8 	%> 
+	<th colspan = 2>
+		<% @next = (DateTime.strptime(params["call_when_time1_d"],'%d.%m.%Y') + 1) unless params["call_when_time1_d"].empty? %>
+		<% @previous = (DateTime.strptime(params["call_when_time1_d"],'%d.%m.%Y') -1) unless params["call_when_time1_d"].empty? %>
+		<span>Od</span> 
+		<%= calendar_date_select_tag 'call_when_time1_d', value= params["call_when_time1_d"],  :clear_button => false, :time => false, :popup => :force, :size => 8	%> 
+		<%= link_to "+ den",{:controller => "talks", :action => "index", :call_when_time1_d =>  @next.strftime("%d.%m.%Y"),:call_when_time2_d => @next.strftime("%d.%m.%Y")} unless params["call_when_time1_d"].empty? %> 
+		<br/><span>Do</span> 
+		<%= calendar_date_select_tag 'call_when_time2_d', value= params["call_when_time2_d"],  :clear_button => false, :time => false, :popup => :force, :size => 8 	%> 
+		<%= link_to "- den",{:controller => "talks", :action => "index", :call_when_time1_d => @previous.strftime("%d.%m.%Y") ,:call_when_time2_d => @previous.strftime("%d.%m.%Y")} unless params["call_when_time1_d"].empty? %> 
+			<% if params["finished"] == "0" then  
+				@check = "checked" 
+				@check1 = "" 
+			else 
+				@check1 = "checked"
+				@check = "" 
+			end %>
+	</th>
+	<th>
 	</th>
 	<th> 
-	<% @next = (DateTime.strptime(params["call_when_time1_d"],'%d.%m.%Y') + 1) unless params["call_when_time1_d"].empty? %>
-	<% @previous = (DateTime.strptime(params["call_when_time1_d"],'%d.%m.%Y') -1) unless params["call_when_time1_d"].empty? %>
-	<%= link_to "+ den",{:controller => "talks", :action => "index", :call_when_time1_d =>  @next.strftime("%d.%m.%Y"),:call_when_time2_d => @next.strftime("%d.%m.%Y")} unless params["call_when_time1_d"].empty? %> 
-	<br/>
-		<%= link_to "- den",{:controller => "talks", :action => "index", :call_when_time1_d => @previous.strftime("%d.%m.%Y") ,:call_when_time2_d => @previous.strftime("%d.%m.%Y")} unless params["call_when_time1_d"].empty? %> 
-		<% if params["finished"] == "0" then  
-			@check = "checked" 
-			@check1 = "" 
-		else 
-		  @check1 = "checked"
-			@check = "" 
-		end %>
-		</th>
-	  <th> 
 		<%= radio_button nil, :finished,"0" , { :checked=> @check } %> Jen nové
   	<br/>
 		<%= radio_button nil, :finished,"" ,{ :checked=> @check1 } %>  Vše
 	
   </th>
-   <th> 
+  <th> 
 		Stav<br/><%= text_field_tag  "contacts.state" , value= params["contacts.state"],  :size => 10%>
 	
   </th>
-	<th colspan = 3>
+	<th >
 	  <%= submit_tag 'Nastav filtr'%><br/>
 	  <% end  %> 
 	  

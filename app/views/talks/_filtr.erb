@@ -32,8 +32,10 @@
 	
   </th>
   <th> 
-		Stav<br/><%= text_field_tag  "contacts.state" , value= params["contacts.state"],  :size => 10%>
-	
+		
+    <%= select "", 'contacts.state', options_from_collection_for_select( $StavyHash, :first, :last,
+    		params["contacts.state"]),  {:include_blank => true} , {:style => "width:100px"} %>
+                       
   </th>
 	<th >
 	  <%= submit_tag 'Nastav filtr'%><br/>

@@ -35,9 +35,9 @@
 			<li>
 					<%= f.label :Stav_kontaktu %><br />
 			</li>  
-	<% $Stavy.each do |stav| %>
+	<% $StavyHash.each do |stav,stav1| %>
 			<li>
-			 	<%= f.radio_button :state, stav %> <%= stav %>
+			 	<%= f.radio_button :state, stav %> <%= stav1 %>
 			</li>
 	<% end %>
 	</ul>
