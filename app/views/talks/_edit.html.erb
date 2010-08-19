@@ -1,29 +1,41 @@
 
 <div class="showRecord">
 <% remote_form_for(@talk, :create =>"$('ulozit').appear(); return false;", :complete =>"$('ulozit').fade({ duration: 2.0, from: 1, to: 0}); return false;" ) do |f| %>
+		<% f.fields_for :contact do |contact| %>  
+		<div style="float: left" >
+			<b>Kontakt:</b><BR/>
+				 <%=h  @talk.contact.first_name if @talk.contact   %>
+				 <%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %><BR/>
+				 <b>Stav:</b>
+				 <%= contact.collection_select :state, $StavyHash, :first, :last, {:prompt => true,:size => 15 } %>
+				 <BR/>
+				 <b>Výška:</b> 
+				 <%= contact.text_field :height,:size => 3 %> 
+				 <b>Váha:</b>
+				 <%= contact.text_field :weight,:size => 3 %> 			
+				 <b>Věk:</b>
+				 <%= contact.text_field :age,:size => 3 %>  <BR/>
+				 <b>Ukládání tuku:</b>
+				 <%= contact.collection_select :body_type_id, BodyType.all, :id, :type_cz, {:prompt => true}%>
+				 
+				 
+				 
+		</div>
+		
+		<div  style="margin-left:350px;">
+			<b>Mob telefón:</b>
+			<%= contact.text_field :mob_phone,:size => 12 %> 
+			<b>Pevná linka:</b>
+			<%= contact.text_field :land_line,:size => 12 %>  <BR/>
+			<b>Email:</b><BR/>
+			<%= contact.text_field :email%>  <BR/>
+			
+			<b>Adresa:</b><BR/>
+			<%= contact.text_field :adresa,:size =>35 %>  <BR/>
+		
+		</div>
+		<% end %>  
 
-<div style="float: left" >
-	<b>Kontakt:</b>
-		 <%=h  @talk.contact.first_name if @talk.contact   %>
-		 <%= link_to @talk.contact.last_name , @talk ,{ :title =>"Hovory"}  if @talk.contact.last_name %><BR/>
-		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
-		 
-		 
-		 
-		 
-		 
-</div>
-
-<div  style="margin-left:300px;">
-  <b>Mob telefón:</b>
-  <%=h  @talk.contact.mob_phone.to_s.gsub(/ /,'')  %><BR/>
-  <b>Pevná linka:</b>
-  <%=h  @talk.contact.land_line.to_s.gsub(/ /,'')  %><BR/>
-  <b>Email:</b>
-  <%= text_field_tag "email", value=@talk.contact.email,{:size => 30} %> <BR/>
-  <b>Adresa:</b>
-  <%=h  @talk.contact.adresa %><BR/>
-</div>
 <HR/>
 
 
@@ -161,7 +173,7 @@ Výpis všech hovorů s <%=h  @talk.contact.last_name if @talk.contact   %>
 	
 
   </table>  
-	</div> 
+</div> 
 		
 <% end  %>
 

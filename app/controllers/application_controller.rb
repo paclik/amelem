@@ -5,8 +5,15 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  
- 
+  $Stavy = Array['Doporučení', 'Zajemce o hubnuti','Zajemce o praci','Zájemce po poradně', 'Zájemce s analýzou','Opakovaný účastník poradny',
+   'Nový klient' ,'Opakovaný klient', 'Klient s dohodou', 'Zaregistrovaný klient', 'Dlouhodobý klient', 'Nemá zájem'] 
+  $StavyHash = { 	'Doporučení' => 'Doporučení', 'Zajemce o hubnuti' =>  'Zajemce o hubnuti',
+  	'Zajemce o praci' =>'Zajemce o praci','Zájemce po poradně' =>'Zájemce po poradně', 
+  	'Zájemce s analýzou' =>'Zájemce s analýzou',	'Opakovaný účastník poradny' =>'Opakovaný účastník poradny',
+  	'Nový klient'  => 'Nový klient',	'Opakovaný klient' =>'Opakovaný klient',
+  	'Klient s dohodou' =>'Klient s dohodou', 'Zaregistrovaný klient' => 'Zaregistrovaný klient',
+  	'Dlouhodobý klient' =>'Dlouhodobý klient','Nemá zájem' =>'Nemá zájem' 
+  }
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
   

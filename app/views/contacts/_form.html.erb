@@ -28,51 +28,22 @@
     <%=  collection_select(:contact, :body_type_id, BodyType.all, :id, :type_cz, {:prompt => true})%>
   </p>
 </div> 
+<br />
+
 <div style="margin-left:300px;">
-		<br />
-		 <ul >
+	<ul >
 			<li>
-				<%= f.label :Stav_kontaktu %><br />
+					<%= f.label :Stav_kontaktu %><br />
 			</li>  
+	<% $Stavy.each do |stav| %>
 			<li>
-				<%= f.radio_button :state, 'Doporučení'%>Doporučení
+			 	<%= f.radio_button :state, stav %> <%= stav %>
 			</li>
-			<li>
-				<%= f.radio_button :state, 'Zajemce o hubnuti'%>Zájemce o hubnutí
-			</li>
-			<li>
-				<%= f.radio_button :state, 'Zajemce o praci'%>Zájemce o práci
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Zájemce po poradně'%>Zájemce po poradně 
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Zájemce s analýzou'%>Zájemce s analýzou
-			</li>  
-			<li>	
-				<%= f.radio_button :state, 'Opakovaný účastník poradny'%>Opakovaný účastník poradny
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Nový klient'%>Nový klient  
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Opakovaný klient'%>Opakovaný klient 
-			</li>
-				<li>
-				<%= f.radio_button :state, 'Klient s dohodou'%>Klient s dohodou 
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Zaregistrovaný klient'%>Zaregistrovaný klient
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Dlouhodobý klient'%>Dlouhodobý klient 
-			</li>
-			<li>	
-				<%= f.radio_button :state, 'Nemá zájem'%>Nemá zájem  
-			</li>
-		 </ul>			
-	 
-</div>  
+	<% end %>
+	</ul>
+</div>
+
+
 <div style="clear:left;" >
 		  	<%= f.submit 'Ulož' %>
 	
