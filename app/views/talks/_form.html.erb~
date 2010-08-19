@@ -4,7 +4,7 @@
 	příjmení: <b><%=h @talk.contact.last_name if @talk.contact  %> </b>
 </p>	
 <p>
-	telefon: <%=h @talk.contact.mob_phone if @talk.contact %>  email: <%=h @talk.contact.email if @talk.contact%>
+	telefon: <%=h @talk.contact.mob_phone.to_s.gsub(/ /,'') if @talk.contact %>  email: <%=h @talk.contact.email if @talk.contact%>
 </p>
 
 </div>

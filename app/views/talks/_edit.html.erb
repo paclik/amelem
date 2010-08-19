@@ -9,6 +9,9 @@
 		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
 		 
 		 
+		 
+		 
+		 
 </div>
 
 <div  style="margin-left:300px;">
@@ -17,7 +20,7 @@
   <b>Pevná linka:</b>
   <%=h  @talk.contact.land_line.to_s.gsub(/ /,'')  %><BR/>
   <b>Email:</b>
-  <%= text_field_tag "email",value=@talk.contact.email,{:size => 30} %> <BR/>
+  <%= text_field_tag "email", value=@talk.contact.email,{:size => 30} %> <BR/>
   <b>Adresa:</b>
   <%=h  @talk.contact.adresa %><BR/>
 </div>

@@ -355,6 +355,7 @@ end
     @title="Edituju hovor"
     @condition =  "contact_id LIKE #{@talk.contact_id}"  
     @talks = Talk.find(:all, :conditions => @condition, :order => "call_when_time DESC")
+    @contact = Contact.find(@talk.contact_id)
     #render  :text => "format datumu  #{@formatter()}" , :layout => true 
     #render  :text => "editace hovoru s kontaktem #{@talk.contact.last_name}" , :layout => true 
    
