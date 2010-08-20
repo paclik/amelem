@@ -1,7 +1,7 @@
 class Contact < ActiveRecord::Base
   belongs_to :body_type
-  has_one :talk
-  accepts_nested_attributes_for :talk
+  has_many :talks 
+  accepts_nested_attributes_for :talks
   validates_presence_of :last_name, :state
   #validates_numericality_of :height, :weight, :age
   

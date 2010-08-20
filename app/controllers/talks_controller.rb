@@ -140,7 +140,7 @@ def select_many
 					@adresa = 'http://sms.levnesms.cz/smsgate/smssend.asp?i=4080&h=541912&t=' + @telefon + '&z=' + params[:smstext]
 					@adresa.gsub! /\s+/, '%20'
 					#@adresa =  Iconv.new('US-ASCII//translit','utf-8').iconv(@adresa)
-					@adresa =  Unicode.normalize_KD(@adresa.to_s).gsub(/[^\x00-\x7F]/n,'')
+					@adresa =  Unicode.normalize_KD(@adresa.to_s).gsub(/[\x00-\x7F]$/,'')
 					flash[:notice] +=  URI.parse(@adresa).read
 					
 				end
@@ -278,7 +278,7 @@ end
   		@condition = "contact_id LIKE #{params[:contact_id]}"  if params[:contact_id]
   	end	
   	#@items = Item.paginate :page => page, :order => "id desc", :conditions => @condition
-    @talks = Talk.paginate :page => params[:page], :conditions => @condition, :joins => [:contact], :order => "call_when_time " + @sort
+    @talks = Talk.paginate :page => params[:page], :conditions => @condition,  :order => "call_when_time " + @sort
     	#render :text => @conditions
       respond_to do |format|
       format.html # index.html.erb
@@ -354,7 +354,7 @@ end
     @talk = Talk.find(params[:id])
     @title="Edituju hovor"
     @condition =  "contact_id LIKE #{@talk.contact_id}"  
-    @talks = Talk.find(:all, :conditions => @condition, :order => "call_when_time DESC")
+    @talks = Talk.find(:all, :conditions => @condition,:joins => [:contact], :order => "call_when_time DESC")
     @contact = Contact.find(@talk.contact_id)
     #render  :text => "format datumu  #{@formatter()}" , :layout => true 
     #render  :text => "editace hovoru s kontaktem #{@talk.contact.last_name}" , :layout => true 
@@ -383,10 +383,6 @@ end
   def update
    
   	@talk = Talk.find(params[:id])
-    if (params[:email] != @talk.contact.email) then 
-    	Contact.update(@talk.contact_id,{:email=>params[:email]})
-    	@talk.contact.email = params[:email]
-    end	
     respond_to do |format|
       if @talk.update_attributes(params[:talk])
         flash[:notice] = 'Talk was successfully updated.'

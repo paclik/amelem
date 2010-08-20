@@ -1,2 +1,4 @@
 class Script < ActiveRecord::Base
+	has_one :talk
+	accepts_nested_attributes_for :talk
 end

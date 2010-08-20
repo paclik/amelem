@@ -1,6 +1,7 @@
 <tr>
  		<th nowrap>N. </th>     
  		<th>Kontakt</th>
+ 		<th>Skript</th>
  		<th>Tlf</th>
     <th>Volat kdy </th>
     <th>Start</th>
@@ -30,7 +31,10 @@
     <%=if defined?(@talks.current_page) then check_box_tag 'talk['+i.to_s+']',talk.contact_id end %>		 	
   	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
     </td>
-   	 <td><%=h talk.contact.mob_phone.to_s.gsub(/ /,'')  if talk.contact.mob_phone %>
+   	<td nowrap>
+ 			 <%=h talk.script.name[0..15].gsub(/^(.*?)[^\x00-\x7F]$/,'\1')  if talk.script %>  	
+   	</td>  
+    <td><%=h talk.contact.mob_phone.to_s.gsub(/ /,'')  if talk.contact.mob_phone %>
    	 </td>
     <td>
    		<%=h talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M")%>
@@ -38,8 +42,8 @@
     
     <td><%=h talk.start_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.start_time  %></td>
     <td align="center"><%=h talk.delka_hovoru if talk.finished%></td>
-    <td><%=h talk.contact.state %></td>
-       
+    <td><%=h talk.contact.state[0..15] if talk.contact.state %></td>
+    
     <td><%=h talk.result %></td>
     </tr>
 <% end %>

@@ -23,7 +23,8 @@ class ContactsController < ApplicationController
     #params[:first_name]
     #params[:first_name]
     
-    @conditions =  ['first_name LIKE ? AND last_name LIKE ? AND ( mob_phone LIKE ? OR land_line LIKE ?)', "%#{params[:first_name]}%",  "%#{params[:last_name]}%", "%#{params[:mob_phone]}%" , "%#{params[:mob_phone]}%"] 
+    @conditions =  ['first_name LIKE ? AND last_name LIKE ? AND ( mob_phone LIKE ? OR land_line LIKE ? ) AND email LIKE ? AND state LIKE ?',
+    "%#{params[:first_name]}%",  "%#{params[:last_name]}%", "%#{params[:mob_phone]}%" , "%#{params[:mob_phone]}%", "%#{params[:email]}%" , "%#{params[:state]}%"] 
     
     @contacts = Contact.paginate :page => params[:page],:conditions =>  @conditions, :order => "last_name asc"
     @title="Přehled kontaktů"
@@ -40,7 +41,7 @@ class ContactsController < ApplicationController
     @contact = Contact.find(params[:id])
     @title="Kontakt"
      @condition =  "contact_id LIKE #{@contact.id}"  
-     @talks = Talk.find(:all, :conditions => @condition, :order => "call_when_time DESC")
+     @talks = Talk.find(:all, :conditions => @condition, :joins => [:contact],:order => "call_when_time DESC")
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @contact }

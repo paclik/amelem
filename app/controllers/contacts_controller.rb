@@ -41,7 +41,7 @@ class ContactsController < ApplicationController
     @contact = Contact.find(params[:id])
     @title="Kontakt"
      @condition =  "contact_id LIKE #{@contact.id}"  
-     @talks = Talk.find(:all, :conditions => @condition, :order => "call_when_time DESC")
+     @talks = Talk.find(:all, :conditions => @condition, :joins => [:contact],:order => "call_when_time DESC")
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @contact }

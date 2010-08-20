@@ -1,9 +1,8 @@
 class Talk < ActiveRecord::Base
-	belongs_to :contact
-	belongs_to :script
+	belongs_to :contact , :foreign_key => 'contact_id'
+	belongs_to :script , :foreign_key => 'script_id'
 	validates_presence_of :contact_id
-	
-	 
+	accepts_nested_attributes_for :contact,:script 
 	
   cattr_reader :per_page
   @@per_page = 30
