@@ -32,7 +32,7 @@
   	<%= link_to talk.contact.last_name + "  " + talk.contact.first_name, talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name %>
     </td>
    	<td nowrap>
- 			 <%=h talk.script.name[0..15].gsub(/^(.*?)[^\x00-\x7F]$/,'\1')  if talk.script %>  	
+ 			 <%=h talk.script.nameAbbr  if talk.script %>  	
    	</td>  
     <td><%=h talk.contact.mob_phone.to_s.gsub(/ /,'')  if talk.contact.mob_phone %>
    	 </td>
