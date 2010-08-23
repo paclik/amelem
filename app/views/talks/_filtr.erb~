@@ -3,10 +3,10 @@
 
 <% form_tag ( {:controller => 'talks', :action => 'list'}, { :name => "formular"}) do %>
 	<th colspan = 2>
-   Příjmení <%= text_field_tag  "contacts.last_name" , value= params["contacts.last_name"],  :size => 12 %>
+   Příjmení <%= text_field_tag  "contact.last_name" , value= params["contact.last_name"],  :size => 12 %>
 
 	</th>
-	<th colspan = 2>
+	<th colspan = 3>
 		<% @next = (DateTime.strptime(params["call_when_time1_d"],'%d.%m.%Y') + 1) unless params["call_when_time1_d"].empty? %>
 		<% @previous = (DateTime.strptime(params["call_when_time1_d"],'%d.%m.%Y') -1) unless params["call_when_time1_d"].empty? %>
 		<span>Od</span> 
@@ -23,17 +23,18 @@
 				@check = "" 
 			end %>
 	</th>
-	<th>
-	</th>
-	<th> 
+	
+	<th colspan = 2> 
 		<%= radio_button nil, :finished,"0" , { :checked=> @check } %> Jen nové
   	<br/>
 		<%= radio_button nil, :finished,"" ,{ :checked=> @check1 } %>  Vše
 	
   </th>
-  <th> 
-		Stav<br/><%= text_field_tag  "contacts.state" , value= params["contacts.state"],  :size => 10%>
-	
+  <th > 
+		
+    <%= select "", 'contacts.state', options_from_collection_for_select( $StavyHash, :first, :last,
+    		params["contacts.state"]),  {:include_blank => true} , {:style => "width:100px"} %>
+                       
   </th>
 	<th >
 	  <%= submit_tag 'Nastav filtr'%><br/>
@@ -44,6 +45,6 @@
 				<%= submit_tag 'x'%>
 	   	<%end %>   
 	</th>
-
+	
 </tr>
 
