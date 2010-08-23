@@ -27,11 +27,18 @@
      <%= f.label :body_type_id %><br />
     <%=  collection_select(:contact, :body_type_id, BodyType.all, :id, :type_cz, {:prompt => true})%>
   </p>
+   <%= f.label :Pohlaví %>:<br />
+				 <%= f.radio_button :gender, true %> Muž
+				 <%= f.radio_button :gender, false %>Žena			
 </div> 
 <br />
 
 <div style="margin-left:300px;">
 	<ul >
+			<li>		
+			<%= f.label :Poznámka_ke_kontaktu %><br />
+				<%= f.text_area :note,"cols" =>50, "rows" => 10 %>
+			</li> 	
 			<li>
 					<%= f.label :Stav_kontaktu %><br />
 			</li>  

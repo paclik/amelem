@@ -16,5 +16,13 @@ class Contact < ActiveRecord::Base
 		#contact.last_name if contact
 		
 	end	
+	
+	def bmi
+		unless (weight == nil) or (height == nil) then
+			
+			indexBmi = (weight.to_f / ((height.to_f/100) * (height.to_f/100)) *100).round / 100.0
+		end
+		return indexBmi
+	end	
    	
 end
