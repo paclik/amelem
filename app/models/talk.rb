@@ -29,6 +29,9 @@ class Talk < ActiveRecord::Base
 			end
 			@retez.to_s 	
 	end
-
+ 
+	
 
 end
+
+

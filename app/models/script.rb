@@ -8,12 +8,12 @@ class Script < ActiveRecord::Base
 		#1b. Pozvání do poradny - z dotazniku
 		#1b.PozDoPor-ZDot
 		while (name.gsub(/^(.*?\s){#{$i}}(.*?)$/,'\1') != name) 
-			nameAbbr3 = nameAbbr3 + name.gsub(/^(.*?\s){#{$i}}(.*?)$/,'\1')[0..2].capitalize.gsub(/^(.*?)[^\x00-\x7F]$/,'\1')
+			nameAbbr3 = nameAbbr3 +  name.gsub(/^(.*?\s){#{$i}}(.*?)$/,'\1')[0..2].capitalize.gsub(/^(.*?)[^\x00-\x7F]$/,'\1')
 			$i =  $i + 1
 		end
 		$i =  $i - 1
-		nameAbbr3 = nameAbbr3 + name.gsub(/^(.*?\s){#{$i}}(.*?)$/,'\2')[0..2].capitalize.gsub(/^(.*?)[^\x00-\x7F]$/,'\1')
-		nameAbbr = nameAbbr3.gsub(/\s/,"")
+		nameAbbr3 = nameAbbr3 + name.gsub(/^(.*?\s){#{$i}}(.*?)$/,'\2')[0..2].capitalize.gsub(/[^\x00-\x7F]$/,'\1')
+		nameAbbr= nameAbbr3.gsub(/\s/,"")
 		
 	end
   
