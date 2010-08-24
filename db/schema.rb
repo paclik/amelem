@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(:version => 20100823120707) do
     t.datetime "updated_at"
     t.text     "state"
     t.string   "adresa"
-    t.text     "note" 
+    t.text     "note"
     t.boolean  "gender"
   end
 
