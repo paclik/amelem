@@ -19,5 +19,5 @@ class Script < ActiveRecord::Base
 	end
   
 			
-	end
+	
 end
