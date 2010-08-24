@@ -1,0 +1,49 @@
+<table  class="listtable">
+<tr>
+ 		<th nowrap>N. </th>     
+ 		<th>Skript</th>
+ 		<th>Termín hovoru</th>
+    <th>Start</th>
+    <th>Délka</th>
+    <th>Výsledek</th>
+  </tr>
+<% ####   vypis jednotlivzch radku   %>   
+<% ####   i = row counter %> 
+<%i=0%>
+
+<% @talks.each do |talk| %>
+	<% @TEXT = talk.poznamka[-200..-1] if talk.poznamka != nil %>
+  <% if  @highlight =~ /\Aodd/ then @highlight = 'even' else  @highlight = 'odd' end  %>
+ 
+  <tr id='<%= @highlight%>'>
+  <td nowrap> <%= if defined?(@talks.current_page) then
+  							(i+1).to_i + (@talks.current_page.to_i - 1).to_i * 30 if defined?(@talks.current_page)
+  						else
+  							(i+1).to_i
+  						end	
+  						%>		 
+  </td> 
+  <%i=i+1%>
+  	<td nowrap>
+ 			 <%=h talk.script.nameAbbr  if talk.script %>  	
+   	</td>  
+    <td>
+   		<%= link_to talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M") ,talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name%>
+    </td>
+    
+    <td><%=h talk.start_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.start_time  %></td>
+    <td align="center"><%=h talk.delka_hovoru if talk.finished%></td>
+    <td><%=h talk.result %></td>
+    </tr>
+  
+		<tr id='<%= @highlight%>'>
+				<td >
+				Poznamka:
+				</td>
+				<td colspan=9 >
+			     <%=h talk.poznamka  if talk.poznamka != nil%>
+				</td>
+		</tr>	
+<% end %>
+</table>	
+

@@ -2,7 +2,18 @@
 	<b>Kontakt:</b>
 		 <%=h  @talk.contact.first_name if @talk.contact   %>
 		 <%=h @talk.contact.last_name if @talk.contact  %> <BR/>
-		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %>
+		 <b>stav: </b><%=h @talk.contact.state if @talk.contact  %><BR/>
+		 <b>Výška:</b> 
+		 <%= @talk.contact.height if @talk.contact  %> 
+		 <b>Váha:</b>
+		 <%= @talk.contact.weight if @talk.contact  %> 			
+		 <b>Věk:</b>
+		<%= @talk.contact.age if @talk.contact  %> 
+		<b>BMI:</b>
+		<%= @talk.contact.bmi() if @talk.contact  %>  <BR/>
+		 <b>Ukládání tuku:</b>
+		 <%= @talk.contact.body_type.type_cz if @talk.contact.body_type  %> 
+				 
 </div>
 
 <div  style="margin-left:300px;">
@@ -14,6 +25,8 @@
   <%=h  @talk.contact.email %><BR/>
   <b>Adresa:</b>
   <%=h  @talk.contact.adresa %><BR/>
+  <b>Poznámka:</b>
+  <%=h  @talk.contact.note %><BR/>
 </div>
 <HR/>
 

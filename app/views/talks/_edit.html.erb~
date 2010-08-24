@@ -14,11 +14,14 @@
 				 <b>Váha:</b>
 				 <%= contact.text_field :weight,:size => 3 %> 			
 				 <b>Věk:</b>
-				 <%= contact.text_field :age,:size => 3 %>  <BR/>
+				 <%= contact.text_field :age,:size => 3 %>  
+				 <BR/>
 				 <b>Ukládání tuku:</b>
 				 <%= contact.collection_select :body_type_id, BodyType.all, :id, :type_cz, {:prompt => true}%>
-				 
-				 
+				 <BR/>
+				  <b><%= contact.label :Pohlaví %>:</b>
+				 <%= contact.radio_button :gender, true %> Muž
+				 <%= contact.radio_button :gender, false %>Žena			 
 				 
 		</div>
 		
@@ -31,7 +34,8 @@
 			<%= contact.text_field :email,:size => 20 %>  <BR/>
 			<b>Adresa:</b><BR/>
 			<%= contact.text_field :adresa,:size =>35 %>  <BR/>
-		
+			<b>Poznámka:</b><BR/>
+			<%= contact.text_area :note, "cols" =>50, "rows" => 2  %>  <BR/>
 		</div>
 		<% end %>  
   

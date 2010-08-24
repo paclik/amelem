@@ -12,12 +12,12 @@
 
 <div>
   <b>Mob telefón:</b>
-  <%=h @contact.mob_phone %>
+  <%=h @contact.mob_phone.to_s.gsub(/ /,'') %>
 </div>
 
 <div>
   <b>Pevná linka:</b>
-  <%=h @contact.land_line %>
+  <%=h @contact.land_line.to_s.gsub(/ /,'') %>
 </div>
 
 <div>
