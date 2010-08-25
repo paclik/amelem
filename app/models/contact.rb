@@ -18,7 +18,7 @@ class Contact < ActiveRecord::Base
 	end	
 	
 	def bmi
-		unless (weight == nil) or (height == nil) then
+		unless (weight == nil) or (height == nil) or (height == 0) then
 			
 			indexBmi = (weight.to_f / ((height.to_f/100) * (height.to_f/100)) *100).round / 100.0
 		else

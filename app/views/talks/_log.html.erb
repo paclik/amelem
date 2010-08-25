@@ -24,11 +24,11 @@
   						%>		 
   </td> 
   <%i=i+1%>
-  	<td nowrap>
- 			 <%=h talk.script.nameAbbr  if talk.script %>  	
+  	<td nowrap >
+ 			 <%=h talk.script.nameAbbr   if talk.script %>  	
    	</td>  
     <td>
-   		<%= link_to talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M") ,talk ,{ :title =>"Editace hovoru"}  if talk.contact.last_name%>
+   		<%= link_to talk.call_when_time.localtime.strftime("%d-%m-%y|%H.%M") ,talk ,{ :title =>"Ukaž hovoru"}  if talk.contact.last_name%>
     </td>
     
     <td><%=h talk.start_time.localtime.strftime("%d-%m-%y|%H.%M") if talk.start_time  %></td>

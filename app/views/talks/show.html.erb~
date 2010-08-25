@@ -8,11 +8,15 @@
 		 <b>Váha:</b>
 		 <%= @talk.contact.weight if @talk.contact  %> 			
 		 <b>Věk:</b>
-		<%= @talk.contact.age if @talk.contact  %> 
-		<b>BMI:</b>
-		<%= @talk.contact.bmi() if @talk.contact  %>  <BR/>
+		<%= @talk.contact.age if @talk.contact  %> <BR/>
 		 <b>Ukládání tuku:</b>
-		 <%= @talk.contact.body_type.type_cz if @talk.contact.body_type  %> 
+		 <%= @talk.contact.body_type.type_cz if @talk.contact.body_type  %> <BR/>
+		<b>BMI:</b>
+		<%= @talk.contact.bmi() if @talk.contact  %> 
+		<%= @talk.contact.age if @talk.contact  %> 
+		<b>BF:</b>
+		<%= @talk.contact.bfat() if @talk.contact  %>  
+		
 				 
 </div>
 
@@ -31,15 +35,15 @@
 <HR/>
 
 <div>
-	<b>Kdy zavolat:</b>
-	<%=h   @talk.call_when_time.strftime("%d-%m-%Y %H.%M| Den: %a | Týden:%W") if @talk.call_when_time %>
-	<BR/>
-	<b>Hovor skončil:</b>
-	<%=h "Ano" if @talk.finished %>
-	<BR/>
-	<b>Poradna:</b>
-	<%=h "Ano" if @talk.poradna  %>
-	<BR/>
+	<b>Termín hovoru:</b>
+	<%=h   @talk.call_when_time.strftime("%d-%m-%Y %H.%M| Týden:%W") if @talk.call_when_time %><BR/>
+	<b>Začátek hovoru:</b> 
+  <%=h @talk.start_time.localtime.strftime("%d-%m-%y|%H.%M") if @talk.start_time  %>
+  <b>Délka hovoru:</b> 
+  <%=h @talk.delka_hovoru if @talk.finished%>
+  <b>Výsledek hovoru:</b> 
+  <%=h @talk.result %>
+  <BR/>
 	<b>Poznámka:</b>
 	<%=h @talk.poznamka %>
 	<BR/>
@@ -53,5 +57,5 @@
 
 <p>
 Výpis všech hovorů s <%=h  @talk.contact.last_name if @talk.contact   %>
-<%= render :partial => 'list' %> 
+<%= render :partial => 'log' %> 
 </ p>
