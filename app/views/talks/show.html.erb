@@ -36,6 +36,9 @@
 <div>
 	<b>Termín hovoru:</b>
 	<%=h   @talk.call_when_time.strftime("%d-%m-%Y %H.%M| Týden:%W") if @talk.call_when_time %><BR/>
+	<b>Skript:</b>
+	<%=h   @talk.script.name if @talk.script %><BR/>
+	
 	<b>Začátek hovoru:</b> 
   <%=h @talk.start_time.localtime.strftime("%d-%m-%y|%H.%M") if @talk.start_time  %>
   <b>Délka hovoru:</b> 
