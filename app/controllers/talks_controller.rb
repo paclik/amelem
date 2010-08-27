@@ -137,12 +137,13 @@ def select_many
 				@itemIdField.each do |key|
 					@contact = Contact.find(key)
 					@telefon = @contact.mob_phone.to_s.gsub(/\s+/,'') 
-					@adresa = 'http://sms.levnesms.cz/smsgate/smssend.asp?i=4080&h=541912&t=' + @telefon + '&z=' + params[:smstext]
+					@smstext = params[:smstext]
+					@smstext= @smstext.mb_chars.normalize(:kd).gsub(/[^\x00-\x7F]/n,'').to_s
+					@adresa = 'http://sms.levnesms.cz/smsgate/smssend.asp?i=4080&h=541912&t=' + @telefon + '&z=' +  @smstext 
 					@adresa.gsub! /\s+/, '%20'
 					#@adresa =  Iconv.new('US-ASCII//translit','utf-8').iconv(@adresa)
-					@adresa = @adresa.mb_chars.normalize(:kd).gsub(/[^x00-\x7F]/n, '').to_s
 					flash[:notice] +=  URI.parse(@adresa).read
-					
+				  #flash[:notice] +=  @smstext
 				end
 				flash[:notice] +=  @adresa
 			when "Nové hovory" then

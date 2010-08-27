@@ -140,7 +140,7 @@ def select_many
 					@adresa = 'http://sms.levnesms.cz/smsgate/smssend.asp?i=4080&h=541912&t=' + @telefon + '&z=' + params[:smstext]
 					@adresa.gsub! /\s+/, '%20'
 					#@adresa =  Iconv.new('US-ASCII//translit','utf-8').iconv(@adresa)
-					@adresa =  Unicode.normalize_KD(@adresa.to_s).gsub(/[\x00-\x7F]$/,'')
+					@adresa = @adresa.mb_chars.normalize(:kd).gsub(/[^x00-\x7F]/n, '').to_s
 					flash[:notice] +=  URI.parse(@adresa).read
 					
 				end
